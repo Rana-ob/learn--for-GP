@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل حساب جديد - رؤى</title>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* CSS الأساسي */
+        body {
+            font-family: 'Almarai', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        
+        .main-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .image-section {
+            flex: 1;
+            background: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .image-section img {
+            max-width: 80%;
+            height: auto;
+        }
+        
+        .signup-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .header-logo {
+            margin-bottom: 2rem;
+        }
+        
+        .rawa-signup-logo {
+            height: 60px;
+        }
+        
+        .signup-box {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+        }
+        
+        .box-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .box-header h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin: 0;
+        }
+        
+        .signup-form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 700;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Almarai', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .form-group-radio {
+            margin-bottom: 1.2rem;
+        }
+        
+        .form-group-radio p {
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 700;
+        }
+        
+        .radio-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .radio-options label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .radio-options input {
+            margin-left: 0.5rem;
+        }
+        
+        .form-group-checkbox {
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-group-checkbox input {
+            margin-left: 0.5rem;
+        }
+        
+        .terms-link {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .terms-link:hover {
+            text-decoration: underline;
+        }
+        
+        .submit-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 5px;
+            font-family: 'Almarai', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-button:hover {
+            background-color: #2980b9;
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+        }
+        
+        .login-link a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+        
+        /* Styles for terms and conditions popup */
+        .terms-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .terms-content {
+            background-color: white;
+            width: 90%;
+            max-width: 900px;
+            max-height: 80vh;
+            padding: 25px;
+            border-radius: 10px;
+            overflow-y: auto;
+            direction: rtl;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .terms-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .terms-header h2 {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 1.5rem;
+        }
+        
+        .close-terms {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .terms-text {
+            line-height: 1.6;
+            color: #555;
+            text-align: right;
+        }
+        
+        .terms-text h3 {
+            color: #2c3e50;
+            margin-top: 20px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .terms-text ol, .terms-text ul {
+            padding-right: 20px;
+        }
+        
+        .terms-text li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="image-section">
+            <img src="images/login-bg.png" alt="Decorative Image" class="left-decorative-image">
+        </div>
+
+        <div class="signup-container">
+            <div class="header-logo">
+                <img src="images/Rowa2.png" alt="Rawa Logo" class="rawa-signup-logo">
+            </div>
+
+            <div class="signup-box">
+                <div class="box-header">
+                    <h1>الوصي الشرعي</h1>
+                </div>
+                <form class="signup-form" id="signupForm">
+                    <div class="form-group">
+                        <label for="full-name">ما اسمك الكامل؟</label>
+                        <input type="text" id="full-name" name="full-name" placeholder="" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="national-id">رقم الهوية الوطنية؟</label>
+                        <input type="text" id="national-id" name="national_id" placeholder="" required maxlength="10">
+                        <div class="error-message" id="national-id-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">الرمز السري</label>
+                        <input type="password" id="password" name="password" placeholder="" required>
+                        <div class="error-message" id="password-error"></div>
+                    </div>
+
+                    <div class="form-group-radio">
+                        <p>ما صفتك بالنسبة لليتيم؟</p>
+                        <div class="radio-options">
+                            <label><input type="radio" name="relationship" value="جد" required> جد</label>
+                            <label><input type="radio" name="relationship" value="عم"> عم</label>
+                            <label><input type="radio" name="relationship" value="وصي من المحكمة"> وصي من المحكمة</label>
+                            <label><input type="radio" name="relationship" value="جهة رسمية"> جهة رسمية</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group-radio">
+                        <p>هل تملك وثيقة وصاية رسمية؟</p>
+                        <div class="radio-options">
+                            <label><input type="radio" name="official_guardianship" value="نعم" required> نعم</label>
+                            <label><input type="radio" name="official_guardianship" value="لا"> لا</label>
+                        </div>
+                        <div class="error-message" id="guardianship-error" style="display: none;">
+                            نعتذر، لا يمكن إكمال التسجيل بدون وثيقة وصاية رسمية.
+                        </div>
+                    </div>
+
+                    <div class="form-group-radio">
+                        <p>هل سبق وتم فتح حساب بنكي/استثماري لليتيم؟</p>
+                        <div class="radio-options">
+                            <label><input type="radio" name="bank_account_opened" value="نعم" required> نعم</label>
+                            <label><input type="radio" name="bank_account_opened" value="لا"> لا</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group-radio">
+                        <p>هل للطفل أي دخل حالي (إرث – ضمان – دعم حكومي)؟</p>
+                        <div class="radio-options">
+                            <label><input type="radio" name="child_income" value="إرث" required> إرث</label>
+                            <label><input type="radio" name="child_income" value="ضمان"> ضمان</label>
+                            <label><input type="radio" name="child_income" value="دعم حكومي"> دعم حكومي</label>
+                            <label><input type="radio" name="child_income" value="لا يوجد"> لا يوجد</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group-radio">
+                        <p>هل يوجد منع من التصرف بأموال الطفل؟ (بأمر محكمة أو مجلس القُصَّر)</p>
+                        <div class="radio-options">
+                            <label><input type="radio" name="fund_restriction" value="نعم" required> نعم</label>
+                            <label><input type="radio" name="fund_restriction" value="لا"> لا</label>
+                        </div>
+                        <div class="error-message" id="fund-restriction-error" style="display: none;">
+                            نعتذر، لا يمكن إكمال التسجيل بوجود منع من التصرف بأموال الطفل.
+                        </div>
+                    </div>
+
+                    <div class="form-group-radio">
+                        <p>هل الطفل يدرس حاليًا؟</p>
+                        <div class="radio-options">
+                            <label><input type="radio" name="child_study" value="نعم" required> نعم </label>
+                            <label><input type="radio" name="child_study" value="لا"> لا  </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="study-stage-group" style="display: none;">
+                        <label for="study-stage">اختر المرحلة الدراسية</label>
+                        <select id="study-stage" name="study-stage">
+                            <option value="">-- اختر --</option>
+                            <option value="ابتدائي">ابتدائي</option>
+                            <option value="متوسط">متوسط</option>
+                            <option value="ثانوي">ثانوي</option>
+                            <option value="جامعي">جامعي</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group-checkbox">
+                        <label>
+                            <a href="#" class="terms-link">الشروط والأحكام</a> أوافق على
+                            <input type="checkbox" name="terms_and_conditions" required>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-button">إنشاء الحساب</button>
+
+                    <p class="login-link">
+                        لديك حساب؟ <a href="guardian_login.html">سجل الدخول</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms and Conditions Popup -->
+    <div class="terms-popup" id="termsPopup">
+        <div class="terms-content">
+            <div class="terms-header">
+                <h2>الشروط والأحكام - حساب استثماري خاص بالأيتام "رؤى"</h2>
+                <button class="close-terms" id="closeTerms">&times;</button>
+            </div>
+            <div class="terms-text">
+                <h3>التمهيد</h3>
+                <p>نظرًا لرغبة الجهة المُشرفة (الوصي أو الجهة النظامية) في استثمار أموال الأيتام لدى المصرف بطريقة شرعية مسؤولة، فقد اتفق الطرفان على أن يتم تشغيل الأموال ضمن منتج استثماري خاص يُسمى "رُؤى"، يدار وفق صيغة المضاربة الشرعية، ويُعد هذا التمهيد جزءًا لا يتجزأ من الشروط والأحكام ومكملاً لها.</p>
+                
+                <h3>التعريفات</h3>
+                <ul>
+                    <li><strong>منتج رُؤى:</strong> حساب استثماري للأيتام يدار من خلال صيغة المضاربة الشرعية.</li>
+                    <li><strong>المصرف:</strong> مصرف الإنماء بصفته مضاربًا ومديرًا للاستثمار.</li>
+                    <li><strong>الوصي:</strong> هو الشخص أو الجهة الشرعية المخولة بإدارة مال اليتيم والزكاة عنه.</li>
+                    <li><strong>اليتيم:</strong> القاصر الذي توفي والده ولم يبلغ سن الرشد، ويمتلك رصيدًا في هذا الحساب.</li>
+                    <li><strong>مبلغ الاستثمار:</strong> المال المودع من قبل الوصي أو الجهة النظامية باسم اليتيم لاستثماره.</li>
+                </ul>
+                
+                <h3>صيغة الاستثمار</h3>
+                <ol>
+                    <li>يقوم منتج "رُؤى" على صيغة المضاربة الشرعية، حيث يقدم اليتيم المال ويقوم المصرف بالإدارة والاستثمار.</li>
+                    <li>يتعهد المصرف بإدارة الأموال بما يحقق مصلحة اليتيم، دون ضمان للربح أو رأس المال، إلا في حال التعدي أو التقصير أو مخالفة شروط الاتفاقية.</li>
+                    <li>تكون نسبة توزيع الأرباح 99% لليتيم و1% للمصرف كمضارب، وفقًا لما تحقق فعليًا من أرباح.</li>
+                </ol>
+                
+                <h3>أرباح الحساب</h3>
+                <ol>
+                    <li>تُوزّع الأرباح بين المصرف واليتيم بنسبة المضاربة المحددة أعلاه.</li>
+                    <li>في حال زيادة الربح الفعلي عن الربح المتوقع، تبقى حصة المصرف 1% فقط، ولا يحصل على حافز إضافي.</li>
+                    <li>في حال كان الربح الفعلي أقل من المتوقع، يتحمل اليتيم التغير في الربح ولا يُلزم المصرف بتعويض النقص، ما لم يكن هناك تقصير.</li>
+                </ol>
+                
+                <h3>الزكاة</h3>
+                <ol>
+                    <li>في حال بلغ رصيد اليتيم النصاب وحال عليه الحول، فالزكاة واجبة عليه شرعًا.</li>
+                    <li>يتولى الوصي إخراج الزكاة نيابة عن اليتيم، ويقع عليه مسؤولية التحقق من النصاب والمدة.</li>
+                </ol>
+                
+                <h3>الإيداع والسحب</h3>
+                <ol>
+                    <li>لا يُسمح بالسحب من الحساب إلا بعد مرور ١١ سنة أو وصول اليتيم إلى السن القانوني وفق ضوابط شرعية وبعد الرجوع للجهة المختصة، مثل المحكمة أو الجمعية الرسمية.</li>
+                    <li>يمكن للوصي أو الجهة النظامية إيداع مبالغ إضافية باسم اليتيم في أي وقت.</li>
+                    <li>يمكن اعادة استثمار الأموال بعد وصوله إلى السن القانوني و لمدة ٤ سنوات و يمكن السحب من الحساب بعد اعادة الاستثمار بحد أقصى ٥٠,٠٠٠ ألف ريالاً سعودياً.</li>
+                </ol>
+                
+                <h3>الحوكمة والرقابة</h3>
+                <ol>
+                    <li>يُخضع المصرف أموال حساب "رُؤى" لرقابة شرعية ومالية مستقلة.</li>
+                    <li>تُستثمر الأموال في أنشطة مجازة من الهيئة الشرعية للمصرف.</li>
+                </ol>
+                
+                <h3>الإنهاء والتحويل</h3>
+                <ol>
+                    <li>يكون إسم الحساب باسم اليتيم وفق الإجراءات النظامية و بأشراف الوصي.</li>
+                    <li>للوصي الحق في طلب إنهاء الحساب أو تحويله بناءً على مصلحة اليتيم ووفق الضوابط.</li>
+                </ol>
+                
+                <h3>أحكام عامة</h3>
+                <ol>
+                    <li>يخضع هذا المنتج لأنظمة البنك المركزي السعودي، ولوائح حماية أموال القاصرين.</li>
+                    <li>يحق للمصرف تعديل شروط الاستثمار بما لا يضر بحقوق اليتيم، ويتم إشعار الوصي بذلك.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Terms and conditions popup functionality
+            const termsLink = document.querySelector('.terms-link');
+            const termsPopup = document.getElementById('termsPopup');
+            const closeTerms = document.getElementById('closeTerms');
+            
+            if (termsLink && termsPopup && closeTerms) {
+                termsLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    termsPopup.style.display = 'flex';
+                    document.querySelector('.terms-content').scrollTop = 0;
+                });
+                
+                closeTerms.addEventListener('click', function() {
+                    termsPopup.style.display = 'none';
+                });
+                
+                // Close when clicking outside the popup content
+                termsPopup.addEventListener('click', function(e) {
+                    if (e.target === termsPopup) {
+                        termsPopup.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Show/hide study stage based on child study status
+            const studyRadios = document.querySelectorAll('input[name="child_study"]');
+            const studyStageGroup = document.getElementById('study-stage-group');
+            
+            studyRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'نعم') {
+                        studyStageGroup.style.display = 'block';
+                    } else {
+                        studyStageGroup.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Validate guardianship document
+            const guardianshipRadios = document.querySelectorAll('input[name="official_guardianship"]');
+            const guardianshipError = document.getElementById('guardianship-error');
+            
+            guardianshipRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'لا') {
+                        guardianshipError.style.display = 'block';
+                    } else {
+                        guardianshipError.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Validate fund restriction
+            const fundRestrictionRadios = document.querySelectorAll('input[name="fund_restriction"]');
+            const fundRestrictionError = document.getElementById('fund-restriction-error');
+            
+            fundRestrictionRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'نعم') {
+                        fundRestrictionError.style.display = 'block';
+                    } else {
+                        fundRestrictionError.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Form submission
+            const signupForm = document.getElementById('signupForm');
+            
+            if (signupForm) {
+                signupForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Validate national ID (10 digits)
+                    const nationalId = document.getElementById('national-id').value;
+                    if (nationalId.length !== 10 || !/^\d+$/.test(nationalId)) {
+                        document.getElementById('national-id-error').textContent = 'يجب أن يتكون رقم الهوية من 10 أرقام';
+                        document.getElementById('national-id-error').style.display = 'block';
+                        return;
+                    } else {
+                        document.getElementById('national-id-error').style.display = 'none';
+                    }
+                    
+                    // Validate password (minimum 8 characters)
+                    const password = document.getElementById('password').value;
+                    if (password.length < 8) {
+                        document.getElementById('password-error').textContent = 'يجب أن يكون الرمز السري مكون من 8 أحرف على الأقل';
+                        document.getElementById('password-error').style.display = 'block';
+                        return;
+                    } else {
+                        document.getElementById('password-error').style.display = 'none';
+                    }
+                    
+                    // If all validations pass, submit the form
+                    alert('تم تسجيل الحساب بنجاح!');
+                    // Here you would normally submit the form to the server
+                    // this.submit();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

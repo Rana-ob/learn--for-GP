@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>روّى | منصة التمويل العقاري</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --body-bg: #002C3E;
+            --header-bg: rgba(255, 250, 248, 1);
+            --button-color: #7D7FC8;
+            --text-dark: #002C3E;
+            --text-light: #FFFFFF;
+            --text-orange: #EA8F75;
+            --hover-color: #5a58a5;
+            --border-color: rgba(255, 255, 255, 0.2);
+            --error-color: #ff6b6b;
+            --success-color: #6bff8f;
+            --card-bg: rgba(0, 44, 62, 0.7);
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Almarai', sans-serif;
+        }
+
+        body {
+            background-color: var(--body-bg);
+            min-height: 100vh;
+            color: var(--text-light);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(234, 143, 117, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(125, 127, 200, 0.15) 0%, transparent 20%);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 100;
+        }
+
+        .navbar-main {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .mini-logo {
+            height: 40px;
+            transition: transform 0.3s;
+        }
+
+        .mini-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .header-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .header-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 700;
+            padding: 5px 0;
+            position: relative;
+            transition: all 0.3s;
+            font-size: 1.05rem;
+        }
+
+        .header-link:hover {
+            color: var(--text-orange);
+        }
+
+        .header-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--text-orange);
+            transition: width 0.3s;
+        }
+
+        .header-link:hover::after {
+            width: 100%;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logout-button {
+            background-color: var(--button-color);
+            color: var(--text-light);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .logout-button:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .language-toggle {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s;
+            font-size: 1.05rem;
+        }
+
+        .language-toggle:hover {
+            color: var(--text-orange);
+        }
+
+        .balance-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 80px);
+            color: var(--text-orange);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .balance-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,44,62,0.9) 0%, rgba(0,44,62,0.7) 100%);
+            z-index: -1;
+        }
+
+        .balance-content {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .balance-amount {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .amount {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #EA8F75, #FFC3A0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .amount-icon, .eye-icon {
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-orange);
+        }
+
+        .eye-icon:hover {
+            transform: scale(1.1);
+            color: #FFC3A0;
+        }
+
+        .account-number {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-top: 15px;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .account-number i {
+            margin-left: 8px;
+        }
+
+        .earnings-container {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: -50px auto 30px;
+            padding: 0 20px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .earnings-card {
+            flex: 1;
+            background: var(--card-bg);
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .earnings-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .earnings-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .earnings-value {
+            font-size: 2.2rem;
+            color: var(--text-orange);
+            margin: 15px 0;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .earnings-percentage {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .earnings-chart {
+            flex: 1;
+            background: var(--card-bg);
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .earnings-chart:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .predictions-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .predictions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .predictions-title {
+            color: var(--text-orange);
+            font-size: 1.8rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .predictions-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--text-orange), transparent);
+            border-radius: 3px;
+        }
+
+        .predictions-chart {
+            background: var(--card-bg);
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            height: 450px;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .predictions-chart:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .calculator-wrapper {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+            align-items: flex-start;
+        }
+
+        .calculator-container {
+            flex: 1;
+            min-width: 300px;
+            padding: 30px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            color: var(--text-light);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .calculator-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .calculator-container h2 {
+            color: var(--text-orange);
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .calculator-container h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 3px;
+            background: var(--text-orange);
+            border-radius: 3px;
+        }
+
+        .input-section {
+            margin-bottom: 25px;
+        }
+
+        .input-section label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 500;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .input-section h3 {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .input-section input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        .input-section input:focus {
+            outline: none;
+            border-color: var(--text-orange);
+            box-shadow: 0 0 0 2px rgba(234, 143, 117, 0.3);
+        }
+
+        .other-amounts {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.9rem;
+            margin-top: 8px;
+            height: 18px;
+        }
+
+        #calculate-btn {
+            background: linear-gradient(to right, #EA8F75, #FF9A8B);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 8px rgba(234, 143, 117, 0.3);
+        }
+
+        #calculate-btn:hover {
+            background: linear-gradient(to right, #FF9A8B, #EA8F75);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(234, 143, 117, 0.4);
+        }
+
+        #result-value {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 25px;
+            color: var(--text-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(234, 143, 117, 0.1);
+            border-radius: 8px;
+            border: 1px dashed var(--text-orange);
+            transition: all 0.3s;
+        }
+
+        #result-value:hover {
+            background: rgba(234, 143, 117, 0.2);
+            transform: scale(1.02);
+        }
+
+        .dual-charts-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .chart-box {
+            background: var(--card-bg);
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            height: 100%;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .chart-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .chart-box h3 {
+            color: var(--text-orange);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .chart-box h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 60px;
+            height: 2px;
+            background: var(--text-orange);
+            border-radius: 2px;
+        }
+
+        .chart-wrapper {
+            height: 300px;
+            position: relative;
+        }
+
+        .chart-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .chart-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chart-dot.active {
+            background-color: var(--text-orange);
+            transform: scale(1.3);
+            box-shadow: 0 0 5px rgba(234, 143, 117, 0.7);
+        }
+
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.3;
+            z-index: -1;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        .main-footer {
+            background-color: rgba(0, 44, 62, 0.9);
+            color: white;
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(234, 143, 117, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(125, 127, 200, 0.1) 0%, transparent 30%);
+            z-index: -1;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+
+        .footer-col h3 {
+            color: var(--text-orange);
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--text-orange);
+            border-radius: 2px;
+        }
+
+        .footer-col p, .footer-col a {
+            color: var(--text-light);
+            margin-bottom: 12px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 1rem;
+        }
+
+        .footer-col a:hover {
+            color: var(--text-orange);
+            padding-right: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.3rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--text-orange);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(234, 143, 117, 0.4);
+        }
+
+        .footer-rawa-logo {
+            max-width: 180px;
+            margin-bottom: 25px;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+
+        .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .language-selector i {
+            font-size: 1.2rem;
+            color: var(--text-orange);
+        }
+
+        .language-selector select {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .language-selector select:focus {
+            outline: none;
+            border-color: var(--text-orange);
+            box-shadow: 0 0 0 2px rgba(234, 143, 117, 0.3);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        .chatbot-button {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #7D7FC8 0%, #5a58a5 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(125, 127, 200, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(125, 127, 200, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(125, 127, 200, 0);
+            }
+        }
+
+        .scrolling-effect {
+            animation: bounce 2s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        .chatbot-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chatbot-container {
+            max-width: 1000px;
+            width: 90%;
+            height: 80vh;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .chatbot-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .chatbot-header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .chatbot-header p {
+            font-size: 16px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .close-chatbot {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-chatbot:hover {
+            color: var(--text-orange);
+            transform: rotate(90deg);
+        }
+
+        .chatbot-iframe {
+            width: 100%;
+            height: calc(100% - 100px);
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 992px) {
+            .header-link span {
+                display: none;
+            }
+            
+            .header-link::after {
+                content: attr(data-tooltip);
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(50%);
+                background: #333;
+                color: white;
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 12px;
+                white-space: nowrap;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+            
+            .header-link:hover::after {
+                opacity: 1;
+            }
+
+            .amount {
+                font-size: 2.8rem;
+            }
+
+            .earnings-value {
+                font-size: 1.8rem;
+            }
+
+            .chatbot-container {
+                height: 70vh;
+                padding: 20px;
+            }
+
+            .chatbot-header h1 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .navbar-main {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .header-links {
+                gap: 15px;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .amount {
+                font-size: 2.2rem;
+            }
+            
+            .earnings-container,
+            .calculator-wrapper {
+                flex-direction: column;
+            }
+
+            .balance-content {
+                padding: 30px 20px;
+            }
+
+            .calculator-container {
+                width: 100%;
+            }
+
+            .footer-col {
+                min-width: 50%;
+                text-align: center;
+            }
+
+            .footer-col h3::after {
+                right: 50%;
+                transform: translateX(50%);
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+
+            .chatbot-button {
+                width: 60px;
+                height: 60px;
+                font-size: 25px;
+                bottom: 20px;
+                left: 20px;
+            }
+
+            .chatbot-container {
+                height: 65vh;
+                padding: 15px;
+            }
+
+            .chatbot-header h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .balance-section {
+                height: auto;
+                padding: 40px 20px;
+            }
+
+            .amount {
+                font-size: 1.8rem;
+            }
+
+            .account-number {
+                font-size: 0.9rem;
+            }
+
+            .earnings-card, .earnings-chart {
+                padding: 20px;
+            }
+
+            .calculator-container {
+                padding: 20px;
+            }
+
+            #result-value {
+                font-size: 1.5rem;
+            }
+
+            .footer-col {
+                min-width: 100%;
+            }
+
+            .chatbot-button {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                bottom: 15px;
+                left: 15px;
+            }
+
+            .chatbot-container {
+                height: 60vh;
+                padding: 10px;
+            }
+
+            .chatbot-header h1 {
+                font-size: 20px;
+            }
+
+            .chatbot-header p {
+                font-size: 14px;
+            }
+        }
+       
+        .chart-container {
+            width: 100%;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+   
+    <div class="floating-element" style="width: 150px; height: 150px; background: rgba(234, 143, 117, 0.1); top: 20%; left: 10%; animation-delay: 0s;"></div>
+    <div class="floating-element" style="width: 100px; height: 100px; background: rgba(125, 127, 200, 0.1); top: 60%; left: 80%; animation-delay: 2s;"></div>
+    <div class="floating-element" style="width: 80px; height: 80px; background: rgba(255, 255, 255, 0.05); top: 30%; left: 70%; animation-delay: 4s;"></div>
+    <div class="floating-element" style="width: 120px; height: 120px; background: rgba(234, 143, 117, 0.08); top: 70%; left: 20%; animation-delay: 6s;"></div>
+
+    <header class="navbar">
+        <div class="navbar-main">
+            <img src="images/Rowa2.png" alt="Rawa Logo" class="mini-logo">
+            <nav class="header-links">
+                <a href="#" class="header-link" data-tooltip="المعلومات">المعلومات الشخصية</a>
+                <a href="#" class="header-link" data-tooltip="الحاسبة">احسب العوائد الاستثمارية</a>
+                <a href="#" class="header-link" data-tooltip="التوقعات">التوقعات المستقبلية</a>
+            </nav>
+        </div>
+        
+        <div class="navbar-right">
+            <a href="#" class="language-toggle">English</a>
+            <button class="logout-button">تسجيل خروج</button>
+        </div>
+    </header>
+
+    <section class="balance-section">
+        <div class="balance-background"></div>
+        <div class="balance-content">
+            <div class="balance-amount">
+                <span class="amount">13,000</span>
+                <i class="fas fa-riyal-sign amount-icon"></i>
+                <i class="fas fa-eye eye-icon"></i>
+            </div>
+            <div class="account-number">
+                <i class="fas fa-wallet"></i> رقم الحساب: SA0380000000608019999999
+            </div>
+        </div>
+    </section>
+
+    <div class="calculator-wrapper">
+        <div class="calculator-container">
+            <h2>حاسبة العوائد الاستثمارية</h2>
+            
+            <div class="input-section">
+                <label for="initial-amount">المبلغ الأولي</label>
+                <input type="number" id="initial-amount" placeholder="500 ريال" min="500" value="">
+                <div id="amount-error" class="error-message"></div>
+            </div>
+
+            <div class="input-section">
+                <h3>مبلغ الاستقطاع الشهري</h3>
+                <input type="number" id="monthly-deduction" placeholder="500 ريال" value="">
+            </div>
+
+            <div class="input-section">
+                <label for="years">عدد سنوات الاستثمار</label>
+                <input type="number" id="years" placeholder="11" min="1" value="">
+            </div>
+
+            <div class="result-section">
+                <button id="calculate-btn">احسب القيمة النهائية</button>
+                <div id="result-value">0.00 <i class="fas fa-riyal-sign"></i></div>
+            </div>
+        </div>
+
+        <div class="dual-charts-container">
+            <div class="chart-box">
+                <h3>نمو الاستثمار</h3>
+                <div class="chart-wrapper">
+                    <canvas id="growthChart"></canvas>
+                </div>
+                <div class="chart-nav">
+                    <div class="chart-dot active" data-chart-type="line"></div>
+                    <div class="chart-dot" data-chart-type="bar"></div>
+                </div>
+            </div>
+            
+           
+        </div>
+    </div>
+
+    <!-- زر التشات بوت -->
+    <div class="chatbot-button" id="chatbotButton">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <!-- نافذة التشات بوت -->
+    <div class="chatbot-modal" id="chatbotModal">
+        <div class="chatbot-container">
+            <span class="close-chatbot" id="closeChatbot">&times;</span>
+            <div class="chatbot-header">
+                <h1>تحدث مع بوت رؤى</h1>
+                <p>مساعدك الشخصي للإجابة عن كل استفساراتك المتعلقة بالاستثمار الشرعي وأموال الأيتام</p>
+            </div>
+            <iframe class="chatbot-iframe" src="http://127.0.0.1:7860" title="بوت الاستثمار الشرعي وأموال الأيتام"></iframe>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-col footer-contact">
+                <h3>تواصل معنا</h3>
+                <p><i class="fas fa-phone-alt"></i> خدمة العملاء: 888 999 000</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f" id="social-link"></i></a>
+                    <a href="#"><i class="fab fa-instagram" id="social-link"></i></a>
+                    <a href="#"><i class="fab fa-twitter" id="social-link"></i></a>
+                    <a href="#"><i class="fas fa-envelope" id="social-link"></i></a>
+                </div>
+            </div>
+            <div class="footer-col footer-links">
+                <h3>الخدمات</h3>
+                <ul>
+                    <li><a href="#">الوصي الشرعي</a></li>
+                    <li><a href="#">عرض الرصيد الاستثماري</a></li>
+                    <li><a href="#">عرض التوقعات المستقبلية</a></li>
+                </ul>
+            </div>
+            <div class="footer-col footer-links">
+                <ul><br><br>
+                    <li><a href="#">الأسرة الكافلة</a></li>
+                    <li><a href="#">الشروط والأحكام</a></li>
+                    <li><a href="#">حساب العوائد الاستثمارية</a></li>
+                </ul>
+            </div>
+            <div class="footer-col footer-logo">
+                <img src="images/Rowa.png" alt="Rawa Logo" class="footer-rawa-logo">
+                <div class="language-selector">
+                    <i class="fas fa-globe"></i>
+                    <select>
+                        <option value="ar">العربية</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2023 روّى. جميع الحقوق محفوظة.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const initialAmountInput = document.getElementById('initial-amount');
+            const yearsInput = document.getElementById('years');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const resultValue = document.getElementById('result-value');
+            const eyeIcon = document.querySelector('.eye-icon');
+            const amountDisplay = document.querySelector('.amount');
+            const amountError = document.getElementById('amount-error');
+            const monthlyDeductionInput = document.getElementById('monthly-deduction');
+            const chatbotButton = document.getElementById('chatbotButton');
+            const chatbotModal = document.getElementById('chatbotModal');
+            const closeChatbot = document.getElementById('closeChatbot');
+
+            // دالة الحساب الصحيحة (فوائد مركبة)
+            function calculateAnnualInvestment(initialAmount, monthlyDeduction, years) {
+                const annualReturnRate = 0.05;
+                const annualContribution = monthlyDeduction * 12;
+                let currentBalance = initialAmount;
+                const yearlyGrowth = [];
+
+                // السنة الأولى: نحسب العائد على المبلغ الأولي
+                currentBalance += currentBalance * annualReturnRate;
+                yearlyGrowth.push(currentBalance);
+
+                // السنوات التالية: نضيف المساهمة ثم نحسب العائد
+                for (let year = 1; year <= years; year++) {
+                    currentBalance += annualContribution;
+                    currentBalance += currentBalance * annualReturnRate;
+                    yearlyGrowth.push(currentBalance);
+                }
+
+                // مجموع المساهمات والفوائد
+                const totalContributions = initialAmount + annualContribution * (years - 1);
+                const totalEarnings = currentBalance - totalContributions;
+
+                return {
+                    total: currentBalance,
+                    yearlyGrowth: yearlyGrowth,
+                    totalContributions: totalContributions,
+                    totalEarnings: totalEarnings
+                };
+            }
+
+            calculateBtn.addEventListener('click', function() {
+                const initialAmount = parseFloat(initialAmountInput.value) || 0;
+                const monthlyDeduction = parseFloat(monthlyDeductionInput.value) || 0;
+                const years = parseInt(yearsInput.value) || 0;
+
+                if (initialAmount < 500) {
+                    amountError.textContent = 'الحد الأدنى للمبلغ الأولي هو 500 ريال.';
+                    return;
+                } else {
+                    amountError.textContent = '';
+                }
+
+                if (years < 1) {
+                    alert('الرجاء إدخال عدد سنوات صحيح');
+                    return;
+                }
+                
+                const result = calculateAnnualInvestment(initialAmount, monthlyDeduction, years);
+                
+                // تحديث القيمة النهائية مع أيقونة الريال
+                const resultElement = document.getElementById('result-value');
+                resultElement.innerHTML = result.total.toLocaleString('ar-SA', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' <i class="fas fa-riyal-sign"></i>';
+                
+                // إضافة تأثير عند ظهور النتيجة
+                resultElement.style.animation = 'none';
+                setTimeout(() => {
+                    resultElement.style.animation = 'fadeInUp 0.5s ease-out';
+                }, 10);
+                
+                updateCharts(result);
+            });
+
+            eyeIcon.addEventListener('click', function() {
+                const isHidden = amountDisplay.textContent === '********';
+                if (isHidden) {
+                    amountDisplay.textContent = '13,000';
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                } else {
+                    amountDisplay.textContent = '********';
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                }
+            });
+
+            let growthChart, detailsChart, predictionsChart;
+            
+            function updateCharts(result) {
+                const labels = Array.from({length: result.yearlyGrowth.length}, (_, i) => `السنة ${i+1}`);
+
+                if (growthChart) growthChart.destroy();
+                growthChart = createGrowthChart(labels, result.yearlyGrowth);
+
+                if (detailsChart) detailsChart.destroy();
+                detailsChart = createDetailsChart(result.totalContributions, result.totalEarnings);
+            
+                if (predictionsChart) predictionsChart.destroy();
+                predictionsChart = createPredictionsChart(labels, result.yearlyGrowth);
+            }
+
+            function createGrowthChart(labels, data) {
+                const ctx = document.getElementById('growthChart').getContext('2d');
+                return new Chart(ctx, {
+                    type: document.querySelector('.chart-dot.active').dataset.chartType,
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'نمو الاستثمار',
+                            data: data,
+                            borderColor: '#EA8F75',
+                            backgroundColor: 'rgba(234, 143, 117, 0.1)',
+                            tension: 0.3,
+                            fill: true,
+                            borderWidth: 2,
+                            pointBackgroundColor: '#fff',
+                            pointRadius: 5,
+                            pointHoverRadius: 7
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                rtl: true,
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.parsed.y.toLocaleString('ar-SA') + ' ريال';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: { color: 'white' },
+                                grid: { color: 'rgba(255,255,255,0.1)' }
+                            },
+                            y: {
+                                ticks: { 
+                                    color: 'white',
+                                    callback: function(value) {
+                                        return value.toLocaleString('ar-SA') + ' ريال';
+                                    }
+                                },
+                                grid: { color: 'rgba(255,255,255,0.1)' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function createDetailsChart(contributions, earnings) {
+                const ctx = document.getElementById('detailsChart').getContext('2d');
+                return new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['مجموع المساهمات', 'مجموع العوائد'],
+                        datasets: [{
+                            data: [contributions, earnings],
+                            backgroundColor: ['#EA8F75', '#7D7FC8'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: 'white' }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ': ' + context.raw.toLocaleString('ar-SA', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ريال';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function createPredictionsChart(labels, data) {
+                const ctx = document.getElementById('predictionsChart').getContext('2d');
+                return new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'التوقعات السنوية',
+                            data: data,
+                            borderColor: '#EA8F75',
+                            backgroundColor: 'rgba(234, 143, 117, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 2,
+                            pointBackgroundColor: '#fff',
+                            pointRadius: 5,
+                            pointHoverRadius: 7
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                rtl: true,
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.parsed.y.toLocaleString('ar-SA') + ' ريال';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: { color: 'white' },
+                                grid: { color: 'rgba(255,255,255,0.1)' }
+                            },
+                            y: {
+                                ticks: { 
+                                    color: 'white',
+                                    callback: function(value) {
+                                        return value.toLocaleString('ar-SA') + ' ريال';
+                                    }
+                                },
+                                grid: { color: 'rgba(255,255,255,0.1)' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // تحديث عند تغيير نوع الرسم البياني
+            document.querySelectorAll('.chart-dot').forEach(dot => {
+                dot.addEventListener('click', function() {
+                    document.querySelectorAll('.chart-dot').forEach(d => d.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const initialAmount = parseFloat(initialAmountInput.value) || 0;
+                    const monthlyDeduction = parseFloat(monthlyDeductionInput.value) || 0;
+                    const years = parseInt(yearsInput.value) || 0;
+                    const result = calculateAnnualInvestment(initialAmount, monthlyDeduction, years);
+
+                    if (growthChart) growthChart.destroy();
+                    growthChart = createGrowthChart(
+                        Array.from({length: result.yearlyGrowth.length}, (_, i) => `السنة ${i+1}`),
+                        result.yearlyGrowth
+                    );
+                });
+            });
+
+            // تهيئة الرسوم البيانية الأولية
+            const initialResult = calculateAnnualInvestment(6000, 500, 10);
+            updateCharts(initialResult);
+
+            // ChatBot Functionality
+            chatbotButton.addEventListener('click', function() {
+                chatbotModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+
+            closeChatbot.addEventListener('click', function() {
+                chatbotModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+
+            window.addEventListener('click', function(event) {
+                if (event.target === chatbotModal) {
+                    chatbotModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    chatbotButton.classList.add('scrolling-effect');
+                } else {
+                    chatbotButton.classList.remove('scrolling-effect');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

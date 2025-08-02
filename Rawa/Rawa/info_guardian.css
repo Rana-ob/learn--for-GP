@@ -1,0 +1,302 @@
+/* الألوان المحددة - تم تحديثها لتتوافق مع متغيرات الجذر في style.css الرئيسي */
+:root {
+    /* الألوان المحددة الجديدة من style.css الرئيسي */
+    --body-background-color: #002C3E; /* لون الخلفية الكلي للصفحة */
+    --header-button-color: #7D7FC8;     /* لون زر تسجيل الدخول */
+    --hero-quote-color: #DFBD69;        /* لون نص الآية الكريمة */
+
+    /* ألوان أخرى من الصورة الجديدة للهيدر */
+    --header-text-color: #002C3E;       /* لون English ونص Rawa الصغير */
+    --white: rgba(255, 250, 248, 1);
+    --subtle-border-color: #E0E0E0;     /* للخطوط الفاصلة والحدود الخفيفة */
+    --dropdown-hover-bg: #F0F0F0;       /* لون خلفية عند التحويم على خيارات القائمة */
+    --dropdown-border-color: #CCC;      /* لون حدود القائمة المنسدلة */
+
+    /* ألوان جديدة لقسم "ما هو رؤى؟" و "الخدمات" */
+    --rawa-section-bg: #002C3E;         /* لون خلفية قسم "ما هو رؤى؟" */
+    --rawa-section-text-color: #FDE4DD; /* لون النص في قسم "ما هو رؤى؟" */
+    --highlight-color-yellow: #DFBD69; /* لون التمييز الأصفر (لرؤى) */
+    --highlight-color-blue: #7D7FC8;    /* لون التمييز الأزرق (لفتح حساب) */
+    --services-card-bg: #D8FBFF; /* خلفية بطاقات الخدمات - تم التحديث */
+    --services-card-text-color: #002C3E; /* لون نص بطاقات الخدمات - تم التحديث */
+
+    /* ألوان لقسم "قصص ملهمة" والـ Footer */
+    --stories-bg: #002C3E;
+    --stories-title-color: #FDE4DD;
+    --story-card-bg: #D8FBFF;
+    --story-card-text-color: #002C3E;
+    --read-more-color: #7D7FC8;
+
+    --footer-bg: #001A27; /* لون أغمق لأسفل الفوتر */
+    --footer-text-color: #FDE4DD;
+    --footer-link-color: #FDE4DD;
+    --footer-link-hover-color: #7D7FC8;
+    --footer-icon-color: #EA8F75; /* لون أيقونات التواصل الاجتماعي */
+    --footer-select-bg: #002C3E;
+    --footer-select-text: #FDE4DD;
+
+    /* ألوان خاصة بصفحة info_guardian - تم تعيينها لتتوافق مع الألوان العامة */
+    --info-header-bg: var(--white); /* لون الهيدر في هذه الصفحة */
+    --info-body-bg: var(--body-background-color); /* لون خلفية الجسم */
+    --info-card-bg: #23627C; /* لون خلفية بطاقة المعلومات (أغمق كما طلبتِ) */
+    --info-text-dark: var(--header-text-color); /* نص داكن (للهيدر) */
+    --info-text-light: var(--white); /* نص فاتح (على الخلفية الداكنة) - تم التعديل */
+    --info-button-color: var(--header-button-color); /* لون الأزرار */
+    --info-button-hover: #6260B5; /* لون تحويم الأزرار */
+    --info-active-color: var(--footer-icon-color); /* لون العنصر النشط/التمييز #EA8F75 */
+    --info-success-color: #2ECC71; /* لون النجاح (أخضر) */
+    --info-border-color: var(--subtle-border-color); /* لون الحدود الخفيفة */
+}
+
+/* التنسيق العام */
+body {
+    font-family: 'Almarai', sans-serif;
+    background-color: var(--info-body-bg);
+    margin: 0;
+    padding: 0;
+    color: var(--info-text-light); /* نص فاتح على الخلفية الداكنة */
+    direction: rtl; /* اتجاه النص من اليمين لليسار */
+}
+
+/* الهيدر */
+.main-header {
+    background-color: var(--info-header-bg); /* لون الهيدر */
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.logo {
+    height: 40px;
+    width: auto;
+}
+
+.header-links {
+    display: flex;
+    gap: 25px;
+}
+
+.header-link {
+    color: var(--info-text-dark); /* نص داكن للهيدر */
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 0;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.header-link.active {
+    color: var(--info-active-color); /* لون نشط */
+}
+
+.header-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--info-active-color); /* لون نشط */
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.lang-link {
+    color: var(--info-text-dark); /* نص داكن للهيدر */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.lang-link:hover {
+    color: var(--info-active-color);
+}
+
+.logout-btn {
+    background-color: var(--info-button-color); /* لون الزر */
+    color: var(--white); /* نص أبيض على الزر */
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Almarai', sans-serif; /* تطبيق الخط */
+}
+
+.logout-btn:hover {
+    background-color: var(--info-button-hover); /* لون تحويم الزر */
+    transform: translateY(-2px);
+}
+
+/* قسم المعلومات */
+.info-container {
+    background-color: var(--info-card-bg); /* خلفية البطاقة الداكنة */
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 20px; /* حواف دائرية أكبر */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3), /* ظل بنفسجي خفيف */
+                0 10px 25px rgba(0,0,0,0.2); /* ظل أبيض خفيف - تم تعديله ليكون أغمق */
+    color: var(--info-text-light); /* نص فاتح داخل البطاقة الداكنة */
+}
+
+.info-title {
+    color: var(--info-active-color); /* لون #EA8F75 كما طلبتِ */
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px; /* حجم أكبر للعنوان */
+    font-weight: 800; /* خط أثقل للعنوان */
+    border-bottom: 1px solid var(--info-border-color); /* حدود خفيفة */
+    padding-bottom: 10px;
+}
+
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background-color: rgba(255, 255, 255, 0.1); /* خلفية شفافة بيضاء خفيفة */
+    border-radius: 10px; /* حواف دائرية */
+}
+
+.info-label {
+    font-weight: bold;
+    min-width: 160px;
+    color: var(--info-active-color); /* لون #EA8F75 كما طلبتِ */
+}
+
+.info-value {
+    color: #BBBBBB; /* لون رمادي للقيم الثابتة كما طلبتِ */
+}
+
+/* Style for the editable select dropdown */
+.info-value-editable {
+    background-color: var(--white); /* لون أبيض للخلفية */
+    color: var(--header-text-color); /* لون نص داكن */
+    border: 1px solid var(--subtle-border-color);
+    border-radius: 5px;
+    padding: 8px 10px;
+    font-family: 'Almarai', sans-serif;
+    direction: rtl;
+    appearance: none; /* لإزالة سهم المتصفح الافتراضي */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    flex-grow: 1; /* للسماح لها بالنمو */
+    max-width: calc(100% - 170px); /* لضبط العرض مع info-label */
+    cursor: pointer;
+}
+
+.info-value-editable:focus {
+    outline: none;
+    border-color: var(--highlight-color-blue);
+    box-shadow: 0 0 0 2px rgba(125, 127, 200, 0.3);
+}
+
+.status-active {
+    color: var(--info-success-color); /* لون النجاح */
+    font-weight: bold;
+}
+
+.check-icon {
+    color: var(--info-success-color);
+    margin-right: 5px;
+}
+
+/* التصميم المتجاوب */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .header-right, .header-left {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .info-container {
+        margin: 20px; /* تقليل الهامش على الجوال */
+        padding: 20px;
+    }
+
+    .info-title {
+        font-size: 22px; /* حجم أصغر للعنوان */
+        margin-bottom: 20px;
+    }
+
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        padding: 10px;
+    }
+
+    .info-label {
+        min-width: 100%;
+        font-size: 15px;
+    }
+
+    .info-value, .info-value-editable { /* تطبيق حجم الخط على الاثنين */
+        font-size: 14px;
+    }
+
+    .logout-btn {
+        padding: 6px 15px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-header {
+        padding: 10px 15px;
+    }
+    .logo {
+        height: 35px;
+    }
+    .header-links {
+        gap: 15px;
+    }
+    .header-link, .lang-link {
+        font-size: 14px;
+    }
+    .logout-btn {
+        padding: 5px 12px;
+        font-size: 13px;
+    }
+    .info-container {
+        margin: 15px;
+        padding: 15px;
+    }
+    .info-title {
+        font-size: 20px;
+    }
+    .info-label {
+        font-size: 14px;
+    }
+    .info-value, .info-value-editable { /* تطبيق حجم الخط على الاثنين */
+        font-size: 13px;
+    }
+}

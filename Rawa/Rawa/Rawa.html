@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>روّى | منصة التمويل العقاري</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --body-bg: #002C3E;
+            --header-bg: rgba(255, 250, 248, 1);
+            --button-color: #7D7FC8;
+            --text-dark: #002C3E;
+            --text-light: #FFFFFF;
+            --text-orange: #EA8F75;
+            --hover-color: #5a58a5;
+            --border-color: rgba(255, 255, 255, 0.2);
+            --error-color: #ff6b6b;
+            --success-color: #6bff8f;
+            --card-bg: rgba(0, 44, 62, 0.7);
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Almarai', sans-serif;
+        }
+
+        body {
+            background-color: var(--body-bg);
+            min-height: 100vh;
+            color: var(--text-light);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(234, 143, 117, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(125, 127, 200, 0.15) 0%, transparent 20%);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 100;
+        }
+
+        .navbar-main {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .mini-logo {
+            height: 40px;
+            transition: transform 0.3s;
+        }
+
+        .mini-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .header-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .header-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 700;
+            padding: 5px 0;
+            position: relative;
+            transition: all 0.3s;
+            font-size: 1.05rem;
+        }
+
+        .header-link:hover {
+            color: var(--text-orange);
+        }
+
+        .header-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--text-orange);
+            transition: width 0.3s;
+        }
+
+        .header-link:hover::after {
+            width: 100%;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logout-button {
+            background-color: var(--button-color);
+            color: var(--text-light);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .logout-button:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .language-toggle {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s;
+            font-size: 1.05rem;
+        }
+
+        .language-toggle:hover {
+            color: var(--text-orange);
+        }
+
+        .balance-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 80px);
+            color: var(--text-orange);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .balance-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,44,62,0.9) 0%, rgba(0,44,62,0.7) 100%);
+            z-index: -1;
+        }
+
+        .balance-content {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .balance-amount {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .amount {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #EA8F75, #FFC3A0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .amount-icon, .eye-icon {
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-orange);
+        }
+
+        .eye-icon:hover {
+            transform: scale(1.1);
+            color: #FFC3A0;
+        }
+
+        .account-number {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-top: 15px;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .account-number i {
+            margin-left: 8px;
+        }
+
+        .earnings-container {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: -50px auto 30px;
+            padding: 0 20px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .earnings-card {
+            flex: 1;
+            background: var(--card-bg);
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .earnings-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .earnings-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .earnings-value {
+            font-size: 2.2rem;
+            color: var(--text-orange);
+            margin: 15px 0;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .earnings-percentage {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .earnings-chart {
+            flex: 1;
+            background: var(--card-bg);
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .earnings-chart:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .predictions-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .predictions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .predictions-title {
+            color: var(--text-orange);
+            font-size: 1.8rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .predictions-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--text-orange), transparent);
+            border-radius: 3px;
+        }
+
+        .predictions-chart {
+            background: var(--card-bg);
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            height: 450px;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .predictions-chart:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .calculator-wrapper {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+            align-items: flex-start;
+        }
+
+        .calculator-container {
+            flex: 1;
+            min-width: 300px;
+            padding: 30px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            color: var(--text-light);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .calculator-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .calculator-container h2 {
+            color: var(--text-orange);
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .calculator-container h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 3px;
+            background: var(--text-orange);
+            border-radius: 3px;
+        }
+
+        .input-section {
+            margin-bottom: 25px;
+        }
+
+        .input-section label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 500;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .input-section h3 {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .input-section input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        .input-section input:focus {
+            outline: none;
+            border-color: var(--text-orange);
+            box-shadow: 0 0 0 2px rgba(234, 143, 117, 0.3);
+        }
+
+        .other-amounts {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.9rem;
+            margin-top: 8px;
+            height: 18px;
+        }
+
+        #calculate-btn {
+            background: linear-gradient(to right, #EA8F75, #FF9A8B);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 8px rgba(234, 143, 117, 0.3);
+        }
+
+        #calculate-btn:hover {
+            background: linear-gradient(to right, #FF9A8B, #EA8F75);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(234, 143, 117, 0.4);
+        }
+
+        #result-value {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 25px;
+            color: var(--text-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(234, 143, 117, 0.1);
+            border-radius: 8px;
+            border: 1px dashed var(--text-orange);
+            transition: all 0.3s;
+        }
+
+        #result-value:hover {
+            background: rgba(234, 143, 117, 0.2);
+            transform: scale(1.02);
+        }
+
+        .dual-charts-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .chart-box {
+            background: var(--card-bg);
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            height: 100%;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .chart-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .chart-box h3 {
+            color: var(--text-orange);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .chart-box h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 60px;
+            height: 2px;
+            background: var(--text-orange);
+            border-radius: 2px;
+        }
+
+        .chart-wrapper {
+            height: 300px;
+            position: relative;
+        }
+
+        .chart-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .chart-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chart-dot.active {
+            background-color: var(--text-orange);
+            transform: scale(1.3);
+            box-shadow: 0 0 5px rgba(234, 143, 117, 0.7);
+        }
+
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.3;
+            z-index: -1;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        .main-footer {
+            background-color: transparent; /* Changed to transparent */
+            background-image: linear-gradient(135deg, rgba(0,44,62,0.9) 0%, rgba(0,44,62,0.95) 100%); /* Added gradient */
+            color: white;
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px 30px 0 0; /* Rounded top corners */
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.3); /* Shadow at the top */
+        }
+
+        .main-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(234, 143, 117, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(125, 127, 200, 0.1) 0%, transparent 30%);
+            z-index: -1;
+            opacity: 0.7; /* Slightly less opaque to show underlying color */
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+
+        .footer-col h3 {
+            color: var(--text-orange);
+            margin-bottom: 25px;
+            font-size: 1.4rem; /* Slightly larger font */
+            font-weight: 700; /* Bolder */
+            position: relative;
+            padding-bottom: 10px;
+            text-align: right; /* Align right */
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0; /* Aligned right */
+            width: 60px; /* Slightly wider underline */
+            height: 3px; /* Thicker underline */
+            background: var(--text-orange);
+            border-radius: 2px;
+        }
+
+        .footer-col p, .footer-col a {
+            color: var(--text-light);
+            margin-bottom: 12px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s, padding-right 0.3s; /* Added padding transition */
+            font-size: 1rem;
+            line-height: 1.6; /* Better readability */
+        }
+
+        .footer-col a:hover {
+            color: var(--text-orange);
+            padding-right: 8px; /* Push on hover */
+        }
+        
+        .footer-col p i, .footer-col a i {
+            margin-left: 10px; /* Space between icon and text */
+            color: var(--text-orange); /* Icon color */
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px; /* More space */
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.4rem; /* Slightly larger icons */
+            width: 45px; /* Larger hit area */
+            height: 45px; /* Larger hit area */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.15); /* Slightly more prominent background */
+            transition: all 0.3s ease-in-out; /* Smoother transition */
+            border: 1px solid rgba(255,255,255,0.2); /* Subtle border */
+        }
+
+        .social-icons a:hover {
+            background: var(--text-orange);
+            transform: translateY(-5px) rotate(5deg); /* More dynamic hover */
+            box-shadow: 0 8px 20px rgba(234, 143, 117, 0.5); /* Stronger shadow */
+            border-color: var(--text-orange);
+        }
+
+        .footer-rawa-logo {
+            max-width: 200px; /* Slightly larger logo */
+            margin-bottom: 30px; /* More space below logo */
+            filter: brightness(0) invert(1);
+            opacity: 0.95; /* Slightly more opaque */
+            transition: transform 0.3s ease;
+        }
+
+        .footer-rawa-logo:hover {
+            transform: scale(1.05); /* Zoom in on hover */
+        }
+
+        .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* More space */
+            margin-top: 25px; /* More space */
+        }
+
+        .language-selector i {
+            font-size: 1.3rem; /* Larger icon */
+            color: var(--text-orange);
+        }
+
+        .language-selector select {
+            background: rgba(255,255,255,0.15); /* Slightly more prominent background */
+            color: white;
+            border: 1px solid var(--border-color);
+            padding: 10px 18px; /* More padding */
+            border-radius: 10px; /* More rounded */
+            font-size: 1.05rem; /* Slightly larger font */
+            cursor: pointer;
+            transition: all 0.3s;
+            appearance: none; /* Remove default arrow */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); /* Custom arrow */
+            background-repeat: no-repeat;
+            background-position: left 15px center; /* Position custom arrow */
+            padding-right: 40px; /* Space for custom arrow */
+        }
+
+        .language-selector select:focus {
+            outline: none;
+            border-color: var(--text-orange);
+            box-shadow: 0 0 0 3px rgba(234, 143, 117, 0.4); /* Stronger focus shadow */
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 50px; /* More space from columns */
+            padding-top: 25px; /* More padding */
+            border-top: 1px solid rgba(255,255,255,0.2); /* Slightly more prominent border */
+            color: rgba(255,255,255,0.8); /* Slightly less transparent */
+            font-size: 0.95rem; /* Slightly larger font */
+            font-weight: 300; /* Lighter font weight */
+        }
+        
+        /* Specific adjustments for footer columns alignment */
+        .footer-col:nth-child(2) h3,
+        .footer-col:nth-child(2) p,
+        .footer-col:nth-child(3) h3,
+        .footer-col:nth-child(3) a,
+        .footer-col:nth-child(4) h3,
+        .footer-col:nth-child(4) a,
+        .footer-col:nth-child(5) h3,
+        .footer-col:nth-child(5) a,
+        .footer-col:nth-child(5) .language-selector {
+            text-align: right; /* Ensure text is right-aligned */
+            direction: rtl; /* Ensure RTL for Arabic text */
+        }
+        
+        .footer-col:nth-child(2) h3::after,
+        .footer-col:nth-child(3) h3::after,
+        .footer-col:nth-child(4) h3::after,
+        .footer-col:nth-child(5) h3::after {
+            right: 0; /* Align underline to the right */
+        }
+
+
+        .chatbot-button {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #7D7FC8 0%, #5a58a5 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(125, 127, 200, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(125, 127, 200, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(125, 127, 200, 0);
+            }
+        }
+
+        .scrolling-effect {
+            animation: bounce 2s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        .chatbot-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chatbot-container {
+            max-width: 1000px;
+            width: 90%;
+            height: 80vh;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .chatbot-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .chatbot-header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .chatbot-header p {
+            font-size: 16px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .close-chatbot {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-chatbot:hover {
+            color: var(--text-orange);
+            transform: rotate(90deg);
+        }
+
+        .chatbot-iframe {
+            width: 100%;
+            height: calc(100% - 100px);
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 992px) {
+            .header-link span {
+                display: none;
+            }
+            
+            .header-link::after {
+                content: attr(data-tooltip);
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(50%);
+                background: #333;
+                color: white;
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 12px;
+                white-space: nowrap;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+            
+            .header-link:hover::after {
+                opacity: 1;
+            }
+
+            .amount {
+                font-size: 2.8rem;
+            }
+
+            .earnings-value {
+                font-size: 1.8rem;
+            }
+
+            .chatbot-container {
+                height: 70vh;
+                padding: 20px;
+            }
+
+            .chatbot-header h1 {
+                font-size: 28px;
+            }
+            
+            /* Footer adjustments for medium screens */
+            .footer-col {
+                min-width: 45%; /* Allow 2 columns per row */
+            }
+            .footer-col:nth-child(odd) {
+                padding-left: 10px;
+                padding-right: 30px;
+            }
+            .footer-col:nth-child(even) {
+                padding-right: 10px;
+                padding-left: 30px;
+            }
+            .footer-col:nth-child(1) {
+                order: 1; /* Move logo column to top-left */
+            }
+            .footer-col:nth-child(2) {
+                order: 2; /* Move contact to top-right */
+            }
+            .footer-col:nth-child(3) {
+                order: 3; /* Services next */
+            }
+            .footer-col:nth-child(4) {
+                order: 4; /* More next */
+            }
+            .footer-col:nth-child(5) {
+                order: 5; /* Quick links last */
+                min-width: 100%; /* Take full width on a new line */
+                text-align: center;
+            }
+             .footer-col:nth-child(5) h3::after {
+                right: 50%;
+                transform: translateX(50%);
+            }
+            .footer-col:nth-child(5) .language-selector {
+                justify-content: center; /* Center align for full width */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .navbar-main {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .header-links {
+                gap: 15px;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .amount {
+                font-size: 2.2rem;
+            }
+            
+            .earnings-container,
+            .calculator-wrapper {
+                flex-direction: column;
+            }
+
+            .balance-content {
+                padding: 30px 20px;
+            }
+
+            .calculator-container {
+                width: 100%;
+            }
+
+            /* Footer adjustments for small screens */
+            .footer-col {
+                min-width: 100%; /* Each column takes full width */
+                text-align: center; /* Center align all text */
+                padding: 0 10px;
+            }
+            .footer-col h3::after {
+                right: 50%; /* Center underline */
+                transform: translateX(50%);
+            }
+            .social-icons {
+                justify-content: center; /* Center social icons */
+            }
+            .footer-col:nth-child(odd),
+            .footer-col:nth-child(even) {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            .footer-col:nth-child(2) h3,
+            .footer-col:nth-child(2) p,
+            .footer-col:nth-child(3) h3,
+            .footer-col:nth-child(3) a,
+            .footer-col:nth-child(4) h3,
+            .footer-col:nth-child(4) a,
+            .footer-col:nth-child(5) h3,
+            .footer-col:nth-child(5) a,
+            .footer-col:nth-child(5) .language-selector {
+                text-align: center; /* Center align for small screens */
+            }
+            .footer-col:nth-child(2) h3::after,
+            .footer-col:nth-child(3) h3::after,
+            .footer-col:nth-child(4) h3::after,
+            .footer-col:nth-child(5) h3::after {
+                right: 50%;
+                transform: translateX(50%);
+            }
+            .footer-col p i, .footer-col a i {
+                margin-right: 10px; /* Adjust margin for centered text */
+                margin-left: 0;
+            }
+
+            .chatbot-button {
+                width: 60px;
+                height: 60px;
+                font-size: 25px;
+                bottom: 20px;
+                left: 20px;
+            }
+
+            .chatbot-container {
+                height: 65vh;
+                padding: 15px;
+            }
+
+            .chatbot-header h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .balance-section {
+                height: auto;
+                padding: 40px 20px;
+            }
+
+            .amount {
+                font-size: 1.8rem;
+            }
+
+            .account-number {
+                font-size: 0.9rem;
+            }
+
+            .earnings-card, .earnings-chart {
+                padding: 20px;
+            }
+
+            .calculator-container {
+                padding: 20px;
+            }
+
+            #result-value {
+                font-size: 1.5rem;
+            }
+
+            .chatbot-button {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                bottom: 15px;
+                left: 15px;
+            }
+
+            .chatbot-container {
+                height: 60vh;
+                padding: 10px;
+            }
+
+            .chatbot-header h1 {
+                font-size: 20px;
+            }
+
+            .chatbot-header p {
+                font-size: 14px;
+            }
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="floating-element" style="width: 150px; height: 150px; background: rgba(234, 143, 117, 0.1); top: 20%; left: 10%; animation-delay: 0s;"></div>
+    <div class="floating-element" style="width: 100px; height: 100px; background: rgba(125, 127, 200, 0.1); top: 60%; left: 80%; animation-delay: 2s;"></div>
+    <div class="floating-element" style="width: 80px; height: 80px; background: rgba(255, 255, 255, 0.05); top: 30%; left: 70%; animation-delay: 4s;"></div>
+    <div class="floating-element" style="width: 120px; height: 120px; background: rgba(234, 143, 117, 0.08); top: 70%; left: 20%; animation-delay: 6s;"></div>
+
+    <header class="navbar">
+        <div class="navbar-main">
+            <img src="https://raw.githubusercontent.com/FahadAB-Dev/Rawh-frontend/main/Rawh-mini-logo.png" alt="Rawa Logo" class="mini-logo">
+            <nav class="header-links">
+                <a href="#" class="header-link" data-tooltip="المعلومات"><i class="fas fa-user"></i> <span>المعلومات الشخصية</span></a>
+                <a href="#" class="header-link" data-tooltip="الحاسبة"><i class="fas fa-calculator"></i> <span>احسب العوائد الاستثمارية</span></a>
+                <a href="#" class="header-link" data-tooltip="التوقعات"><i class="fas fa-chart-line"></i> <span>التوقعات المستقبلية</span></a>
+            </nav>
+        </div>
+        
+        <div class="navbar-right">
+            <a href="#" class="language-toggle">English</a>
+            <button class="logout-button">تسجيل خروج</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="balance-section">
+            <div class="balance-background"></div>
+            <div class="balance-content">
+                <div class="balance-amount">
+                    <span class="amount">13,000</span>
+                    <i class="fas fa-riyal-sign amount-icon"></i>
+                    <i class="fas fa-eye eye-icon" id="toggleBalance"></i>
+                </div>
+                <div class="account-number">
+                    <i class="fas fa-wallet"></i> رقم الحساب: SA0380000000608019999999
+                </div>
+            </div>
+        </section>
+
+        <section class="earnings-container">
+            <div class="earnings-card">
+                <h3>أرباح هذا الشهر</h3>
+                <p class="earnings-value">3,500 <i class="fas fa-sack-dollar"></i></p>
+                <p class="earnings-percentage">+5.2% عن الشهر السابق</p>
+            </div>
+            <div class="earnings-card">
+                <h3>الأرباح السنوية حتى الآن</h3>
+                <p class="earnings-value">25,000 <i class="fas fa-chart-line"></i></p>
+                <p class="earnings-percentage">+12.8% عن العام الماضي</p>
+            </div>
+            <div class="earnings-chart">
+                <h3>توزيع الأرباح</h3>
+                <div class="chart-wrapper">
+                    <canvas id="profitDistributionChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="predictions-container">
+            <div class="predictions-header">
+                <h2 class="predictions-title">التوقعات المستقبلية</h2>
+            </div>
+            <div class="predictions-chart">
+                <canvas id="futurePredictionsChart"></canvas>
+            </div>
+        </section>
+
+        <section class="calculator-wrapper">
+            <div class="calculator-container">
+                <h2>حاسبة العوائد الاستثمارية</h2>
+                
+                <div class="input-section">
+                    <label for="initialAmount">المبلغ الأولي</label>
+                    <input type="number" id="initialAmount" value="10000" min="0">
+                    <p class="error-message" id="initialAmountError"></p>
+                </div>
+
+                <div class="input-section">
+                    <label for="monthlyContribution">مبلغ الاستقطاع الشهري</label>
+                    <input type="number" id="monthlyContribution" value="500" min="0">
+                    <p class="error-message" id="monthlyContributionError"></p>
+                </div>
+
+                <div class="input-section">
+                    <label for="investmentYears">عدد سنوات الاستثمار</label>
+                    <input type="number" id="investmentYears" value="5" min="1">
+                    <p class="error-message" id="investmentYearsError"></p>
+                </div>
+
+                <button id="calculate-btn">احسب القيمة النهائية</button>
+
+                <p id="result-value">0.00 ر.س</p>
+            </div>
+
+            <div class="dual-charts-container">
+                <div class="chart-box">
+                    <h3>نمو الاستثمار</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="investmentGrowthChart"></canvas>
+                    </div>
+                    <div class="chart-nav">
+                        <div class="chart-dot active" data-chart="1"></div>
+                        <div class="chart-dot" data-chart="2"></div>
+                    </div>
+                </div>
+                <div class="chart-box">
+                    <h3>توزيع الاستثمار</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="investmentDistributionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="chatbot-button" id="chatbotButton">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <div class="chatbot-modal" id="chatbotModal">
+        <div class="chatbot-container">
+            <i class="fas fa-times close-chatbot" id="closeChatbot"></i>
+            <div class="chatbot-header">
+                <h1>تحدث مع بوت رؤى</h1>
+                <p>مساعدك الشخصي للإجابة عن كل استفساراتك المتعلقة بالاستثمار الشرعي وأموال الأيتام</p>
+            </div>
+            <iframe src="https://www.example.com/chatbot" class="chatbot-iframe"></iframe>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <img src="http://googleusercontent.com/file_content/14" alt="Rawah Logo" class="footer-rawa-logo">
+                <p>روّى: منصة رائدة للتمويل العقاري والاستثمار الشرعي لأموال الأيتام.</p>
+                <div class="social-icons">
+                    <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>تواصل معنا</h3>
+                <p><i class="fas fa-phone-alt"></i> 888 999 000</p>
+                <p><i class="fas fa-envelope"></i> info@rawah.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> الرياض، المملكة العربية السعودية</p>
+            </div>
+
+            <div class="footer-col">
+                <h3>الخدمات</h3>
+                <a href="#"><i class="fas fa-angle-left"></i> الوصي الشرعي</a>
+                <a href="#"><i class="fas fa-angle-left"></i> عرض الرصيد الاستثماري</a>
+                <a href="#"><i class="fas fa-angle-left"></i> عرض التوقعات المستقبلية</a>
+            </div>
+
+            <div class="footer-col">
+                <h3>المزيد</h3>
+                <a href="#"><i class="fas fa-angle-left"></i> الأسرة الكافلة</a>
+                <a href="#"><i class="fas fa-angle-left"></i> الشروط والأحكام</a>
+                <a href="#"><i class="fas fa-angle-left"></i> حساب العوائد الاستثمارية</a>
+            </div>
+
+            <div class="footer-col">
+                <h3>الروابط السريعة</h3>
+                <a href="#"><i class="fas fa-angle-left"></i> من نحن</a>
+                <a href="#"><i class="fas fa-angle-left"></i> الأسئلة الشائعة</a>
+                <a href="#"><i class="fas fa-angle-left"></i> سياسة الخصوصية</a>
+                <div class="language-selector">
+                    <i class="fas fa-globe"></i>
+                    <select>
+                        <option value="ar">العربية</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 روّى. جميع الحقوق محفوظة.
+        </div>
+    </footer>
+
+    <script>
+        // Balance toggle functionality
+        document.getElementById('toggleBalance').addEventListener('click', function() {
+            const amountSpan = document.querySelector('.amount');
+            const icon = this;
+            if (amountSpan.textContent.includes('*****')) {
+                amountSpan.textContent = '13,000';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                amountSpan.textContent = '*****';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        });
+
+        // Investment Growth Chart
+        const investmentGrowthCtx = document.getElementById('investmentGrowthChart').getContext('2d');
+        let investmentGrowthChart;
+
+        function createInvestmentGrowthChart(data, labels, title) {
+            if (investmentGrowthChart) {
+                investmentGrowthChart.destroy();
+            }
+            investmentGrowthChart = new Chart(investmentGrowthCtx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: title,
+                        data: data,
+                        borderColor: 'rgba(234, 143, 117, 1)',
+                        backgroundColor: 'rgba(234, 143, 117, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: 'var(--text-light)'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.raw.toLocaleString('ar-SA') + ' ر.س';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'var(--text-light)',
+                                callback: function(value) {
+                                    return value.toLocaleString('ar-SA') + ' ر.س';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'var(--text-light)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Dummy data for Investment Growth Chart
+        const growthData1 = [10000, 11000, 12500, 14000, 16000, 18500, 21000, 23000, 25500, 28000, 31000, 34000];
+        const growthLabels1 = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+        const growthData2 = [50000, 52000, 55000, 58000, 61000, 64000, 67000, 70000, 73000, 76000, 79000, 82000];
+        const growthLabels2 = ['سنة 1', 'سنة 2', 'سنة 3', 'سنة 4', 'سنة 5', 'سنة 6', 'سنة 7', 'سنة 8', 'سنة 9', 'سنة 10', 'سنة 11', 'سنة 12'];
+
+        // Initial chart
+        createInvestmentGrowthChart(growthData1, growthLabels1, 'نمو الاستثمار الشهري');
+
+        // Chart navigation
+        document.querySelectorAll('.chart-dot').forEach(dot => {
+            dot.addEventListener('click', function() {
+                document.querySelectorAll('.chart-dot').forEach(d => d.classList.remove('active'));
+                this.classList.add('active');
+                const chartType = this.dataset.chart;
+                if (chartType === '1') {
+                    createInvestmentGrowthChart(growthData1, growthLabels1, 'نمو الاستثمار الشهري');
+                } else {
+                    createInvestmentGrowthChart(growthData2, growthLabels2, 'نمو الاستثمار السنوي');
+                }
+            });
+        });
+
+        // Investment Distribution Chart
+        const investmentDistributionCtx = document.getElementById('investmentDistributionChart').getContext('2d');
+        new Chart(investmentDistributionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['استثمارات عقارية', 'أسهم', 'سندات', 'سيولة'],
+                datasets: [{
+                    data: [40, 30, 20, 10],
+                    backgroundColor: [
+                        'rgba(234, 143, 117, 0.8)',
+                        'rgba(125, 127, 200, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(255, 206, 86, 0.8)'
+                    ],
+                    borderColor: 'var(--card-bg)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: 'var(--text-light)'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed + '%';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Profit Distribution Chart (for earnings-chart section)
+        const profitDistributionCtx = document.getElementById('profitDistributionChart').getContext('2d');
+        new Chart(profitDistributionCtx, {
+            type: 'bar',
+            data: {
+                labels: ['الربع الأول', 'الربع الثاني', 'الربع الثالث', 'الربع الرابع'],
+                datasets: [{
+                    label: 'أرباح',
+                    data: [12000, 15000, 10000, 18000],
+                    backgroundColor: 'rgba(234, 143, 117, 0.8)',
+                    borderColor: 'rgba(234, 143, 117, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.raw.toLocaleString('ar-SA') + ' ر.س';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'var(--text-light)',
+                            callback: function(value) {
+                                return value.toLocaleString('ar-SA') + ' ر.س';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'var(--text-light)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Future Predictions Chart
+        const futurePredictionsCtx = document.getElementById('futurePredictionsChart').getContext('2d');
+        new Chart(futurePredictionsCtx, {
+            type: 'line',
+            data: {
+                labels: ['2025', '2026', '2027', '2028', '2029', '2030', '2031', '2032', '2033', '2034', '2035'],
+                datasets: [{
+                    label: 'القيمة المتوقعة (ر.س)',
+                    data: [150000, 170000, 195000, 220000, 250000, 285000, 320000, 360000, 400000, 450000, 500000],
+                    borderColor: 'rgba(125, 127, 200, 1)',
+                    backgroundColor: 'rgba(125, 127, 200, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: 'rgba(125, 127, 200, 1)',
+                    pointBorderColor: 'var(--text-light)',
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: 'var(--text-light)'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.raw.toLocaleString('ar-SA') + ' ر.س';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'var(--text-light)',
+                            callback: function(value) {
+                                return value.toLocaleString('ar-SA') + ' ر.س';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'var(--text-light)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Calculator functionality
+        document.getElementById('calculate-btn').addEventListener('click', function() {
+            const initialAmount = parseFloat(document.getElementById('initialAmount').value);
+            const monthlyContribution = parseFloat(document.getElementById('monthlyContribution').value);
+            const investmentYears = parseInt(document.getElementById('investmentYears').value);
+
+            let hasError = false;
+
+            if (isNaN(initialAmount) || initialAmount < 0) {
+                document.getElementById('initialAmountError').textContent = 'الرجاء إدخال مبلغ أولي صحيح.';
+                hasError = true;
+            } else {
+                document.getElementById('initialAmountError').textContent = '';
+            }
+
+            if (isNaN(monthlyContribution) || monthlyContribution < 0) {
+                document.getElementById('monthlyContributionError').textContent = 'الرجاء إدخال مبلغ استقطاع شهري صحيح.';
+                hasError = true;
+            } else {
+                document.getElementById('monthlyContributionError').textContent = '';
+            }
+
+            if (isNaN(investmentYears) || investmentYears < 1) {
+                document.getElementById('investmentYearsError').textContent = 'الرجاء إدخال عدد سنوات صحيح (سنة واحدة على الأقل).';
+                hasError = true;
+            } else {
+                document.getElementById('investmentYearsError').textContent = '';
+            }
+
+            if (hasError) {
+                document.getElementById('result-value').textContent = 'خطأ في الإدخال';
+                return;
+            }
+
+            // Using the logic provided on 2025-07-31 for calculating returns
+            // For example purposes, let's assume a fixed annual return rate
+            const annualReturnRate = 0.05; // 5% annual return
+
+            let totalAmount = initialAmount;
+            for (let i = 0; i < investmentYears; i++) {
+                totalAmount = totalAmount * (1 + annualReturnRate); // Annual growth on current total
+                totalAmount += (monthlyContribution * 12); // Add annual contributions
+            }
+
+            document.getElementById('result-value').textContent = totalAmount.toLocaleString('ar-SA', { style: 'currency', currency: 'SAR', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        });
+
+        // Chatbot modal functionality
+        const chatbotButton = document.getElementById('chatbotButton');
+        const chatbotModal = document.getElementById('chatbotModal');
+        const closeChatbot = document.getElementById('closeChatbot');
+
+        chatbotButton.addEventListener('click', () => {
+            chatbotModal.style.display = 'flex';
+        });
+
+        closeChatbot.addEventListener('click', () => {
+            chatbotModal.style.display = 'none';
+        });
+
+        chatbotModal.addEventListener('click', (e) => {
+            if (e.target === chatbotModal) {
+                chatbotModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

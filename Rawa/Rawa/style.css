@@ -1,0 +1,899 @@
+:root {
+    /* الألوان المحددة الجديدة */
+    --body-background-color: #002C3E; /* لون الخلفية الكلي للصفحة */
+    --header-button-color: #7D7FC8;     /* لون زر تسجيل الدخول */
+    --hero-quote-color: #DFBD69;        /* لون نص الآية الكريمة */
+
+    /* ألوان أخرى من الصورة الجديدة للهيدر */
+    --header-text-color: #002C3E;       /* لون English ونص Rawa الصغير */
+    --white: rgba(255, 250, 248, 1);
+    --subtle-border-color: #E0E0E0;     /* للخطوط الفاصلة والحدود الخفيفة */
+    --dropdown-hover-bg: #F0F0F0;       /* لون خلفية عند التحويم على خيارات القائمة */
+    --dropdown-border-color: #CCC;      /* لون حدود القائمة المنسدلة */
+
+    /* ألوان جديدة لقسم "ما هو رؤى؟" و "الخدمات" */
+    --rawa-section-bg: #002C3E;         /* لون خلفية قسم "ما هو رؤى؟" */
+    --rawa-section-text-color: #FDE4DD; /* لون النص في قسم "ما هو رؤى؟" */
+    --highlight-color-yellow: #DFBD69; /* لون التمييز الأصفر (لرؤى) */
+    --highlight-color-blue: #7D7FC8;    /* لون التمييز الأزرق (لفتح حساب) */
+    --services-card-bg: #D8FBFF; /* خلفية بطاقات الخدمات - تم التحديث */
+    --services-card-text-color: #002C3E; /* لون نص بطاقات الخدمات - تم التحديث */
+
+    /* ألوان لقسم "قصص ملهمة" والـ Footer */
+    --stories-bg: #002C3E;
+    --stories-title-color: #FDE4DD;
+    --story-card-bg: #D8FBFF;
+    --story-card-text-color: #002C3E;
+    --read-more-color: #7D7FC8;
+
+    --footer-bg: #001A27; /* لون أغمق لأسفل الفوتر */
+    --footer-text-color: #FDE4DD;
+    --footer-link-color: #FDE4DD;
+    --footer-link-hover-color: #7D7FC8;
+    --footer-icon-color: #EA8F75; /* لون أيقونات التواصل الاجتماعي */
+    --footer-select-bg: #002C3E;
+    --footer-select-text: #FDE4DD;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Almarai', sans-serif; /* استخدام خط Almarai */
+    direction: rtl; /* اتجاه النص من اليمين لليسار */
+    background-color: var(--body-background-color); /* لون الخلفية الكلي */
+    color: var(--header-text-color); /* لون النص الافتراضي */
+    line-height: 1.6;
+}
+
+/* Header/Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* اللوجو يسار، البقية يمين */
+    align-items: center;
+    padding: 15px 30px;
+    background-color: var(--white);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    height: 70px;
+}
+
+.navbar-left {
+    display: flex; /* لضمان أن الشعار سيبقى لوحده في هذا الجزء */
+    align-items: center;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 25px; /* مسافة بين زر تسجيل الدخول و English */
+}
+
+.navbar-left .mini-logo { /* تم تعديل حجم اللوجو في الهيدر */
+    height: 150px;
+    width: 150px;
+    display: block;
+}
+
+.language-toggle {
+    text-decoration: none;
+    color: var(--header-text-color);
+    font-weight: 500;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.language-toggle:hover {
+    color: var(--header-button-color);
+}
+
+/* Dropdown Styles */
+.dropdown {
+    position: relative;
+    display: inline-block; /* لكي يكون الزر والقائمة بجانب بعضهما في السطر */
+}
+
+.dropbtn {
+    background-color: var(--header-button-color); /* لون خلفية زر تسجيل الدخول */
+    color: var(--white);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* مسافة بين النص والسهم */
+    font-family: 'Almarai', sans-serif; /* تطبيق الخط على الزر */
+}
+
+.dropbtn:hover {
+    background-color: #6260B5; /* لون أغمق قليلاً */
+    transform: translateY(-2px);
+}
+
+.dropdown-arrow {
+    transition: transform 0.3s ease;
+}
+
+.dropdown-content {
+    display: none; /* مخفية افتراضياً */
+    position: absolute;
+    background-color: var(--white);
+    min-width: 220px; /* عرض أدنى للقائمة */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1; /* للتأكد من أنها تظهر فوق المحتوى الآخر */
+    border-radius: 8px;
+    overflow: hidden; /* لضمان أن الـ border-radius يعمل بشكل صحيح */
+    border: 1px solid var(--dropdown-border-color);
+    right: 0; /* لتظهر القائمة على يمين الزر (بسبب dir="rtl") */
+    margin-top: 10px; /* مسافة بين الزر والقائمة */
+}
+
+.dropdown-content a {
+    color: var(--header-text-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block; /* لجعل كل رابط يأخذ سطر كامل */
+    text-align: right; /* محاذاة النص لليمين */
+    transition: background-color 0.2s ease;
+    font-size: 15px;
+    font-family: 'Almarai', sans-serif; /* تطبيق الخط على خيارات القائمة */
+}
+
+.dropdown-content a:hover {
+    background-color: var(--dropdown-hover-bg); /* لون خلفية عند التحويم على الخيارات */
+    color: var(--header-button-color); /* يمكن تغيير لون النص أيضاً */
+}
+
+/* Show the dropdown menu when the button is clicked (handled by JS) */
+.dropdown-content.show {
+    display: block;
+}
+
+/* Hero Section (الشعار والاية) */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    text-align: center;
+    background-color: var(--white);
+    margin: 25px 30px;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
+}
+
+.logo-container {
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; /* ابدأ بالشعار مخفياً */
+    transform: translateY(30px); /* ابدأ الشعار منزلقاً للأسفل قليلاً */
+    animation: slideUp 1.2s ease-out 0.3s forwards, fadeIn 1.2s ease-out 0.3s forwards; /* تطبيق الرسوم المتحركة */
+}
+
+.rawa-logo {
+    max-width: 350px;
+    height: auto;
+    display: block;
+}
+
+.hero-text {
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--hero-quote-color);
+    padding: 15px 40px;
+    line-height: 1.8;
+    white-space: nowrap;
+    opacity: 0; /* ابدأ النص مخفياً */
+    transform: translateY(30px); /* ابدأ النص منزلقاً للأسفل قليلاً */
+    animation: slideUp 1.2s ease-out 0.6s forwards, fadeIn 1.2s ease-out 0.6s forwards; /* تطبيق الرسوم المتحركة بتأخير */
+}
+
+/* Keyframes للرسوم المتحركة */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(30px); }
+    to { transform: translateY(0); }
+}
+
+/* General Container for sections */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* About Rawa Section (ما هو رؤى؟) */
+.about-rawa-section {
+    background-color: var(--rawa-section-bg); /* الخلفية الزرقاء الداكنة */
+    padding: 80px 0; /* مسافة داخلية علوية وسفلية */
+    color: var(--rawa-section-text-color); /* لون النص */
+    position: relative;
+    overflow: hidden; /* لإخفاء أي جزء من الصورة قد يخرج */
+    margin-top: 25px; /* مسافة بين الهيرو وهذا القسم */
+    border-radius: 30px; /* حواف دائرية مثل قسم الهيرو */
+    margin-right: 30px; /* لتتناسب مع الهوامش في الأقسام الأخرى */
+    margin-left: 30px;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: row-reverse; /* الصورة على اليمين والنص على اليسار في RTL */
+    align-items: center;
+    gap: 50px; /* مسافة بين الصورة والنص */
+    justify-content: center; /* توسيط المحتوى */
+}
+
+.about-image-container {
+    flex-shrink: 0; /* لمنع الصورة من الانكماش */
+    width: 400px; /* حجم تقديري للحاوية الدائرية */
+    height: 400px;
+    border-radius: 50%; /* لجعل الحاوية دائرية */
+    overflow: hidden; /* لقص أي جزء من الصورة يخرج عن الدائرة */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* ظل خفيف */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00364C; /* لون خلفية داخل الدائرة إذا كانت الصورة شفافة */
+    position: relative;
+    /* Animation for the image container */
+    opacity: 0;
+    transform: translateX(50px);
+    animation: slideInRight 1.5s ease-out 0.8s forwards;
+}
+
+.about-image {
+    width: 100%; /* اجعل الصورة تملأ الحاوية الدائرية */
+    height: 100%;
+    object-fit: cover; /* لضمان تغطية الصورة للحاوية بدون تشويه */
+    display: block;
+}
+
+.about-text-content {
+    flex-grow: 1;
+    max-width: 600px; /* لتحديد أقصى عرض للنص */
+    text-align: right; /* محاذاة النص لليمين */
+    /* Animation for the text content */
+    opacity: 0;
+    transform: translateX(-50px);
+    animation: slideInLeft 1.5s ease-out 0.8s forwards; /* نفس التأخير أو تأخير بسيط */
+}
+
+.about-text-content h2 {
+    font-size: 48px; /* حجم كبير للعنوان */
+    font-weight: 800; /* خط ثقيل جداً */
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.about-text-content p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+    font-weight: 300; /* خط خفيف للنص العادي */
+}
+
+.highlight-text {
+    color: var(--highlight-color-yellow); /* لون "رؤى" الأصفر */
+    font-weight: 800; /* خط ثقيل لتمييز "رؤى" */
+}
+
+.highlight-text-blue {
+    color: var(--highlight-color-blue); /* لون "فتح حساب استثماري" الأزرق */
+    font-weight: 700; /* خط متوسط لتمييز العبارة الزرقاء */
+}
+
+.about-text-content .quote {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--highlight-color-yellow);
+    margin-top: 40px;
+    text-align: center;
+    width: 100%;
+}
+/* Services Section (خدماتنا الأساسية) */
+.services-section {
+    padding: 80px 0;
+    background-color: transparent; /* خلفية شفافة لكي تظهر خلفية الـ body */
+    text-align: center;
+    margin-top: 50px; /* مسافة بين قسم رؤى والخدمات */
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+.services-section h2 {
+    font-size: 40px;
+    font-weight: bold;
+    color: #FDE4DD ;
+    margin-bottom: 50px;
+}
+
+.services-grid {
+    display: flex; /* Changed from grid to flex */
+    flex-wrap: wrap; /* Allow items to wrap to the next line on smaller screens */
+    justify-content: center; /* Center items horizontally */
+    gap: 15px; /* Reduced gap to make cards closer */
+    max-width: 1200px; /* Keep max-width for centering */
+    margin: 0 auto; /* Center the flex container itself */
+}
+
+.service-card {
+    background-color: var(--story-card-bg);
+    border-radius: 20px;
+    padding: 30px;
+    /* الظل الجديد بنفسجي وأبيض */
+    box-shadow: 0 5px 15px rgba(125, 127, 200, 0.3), /* بنفسجي خفيف (باستخدام لون زر الهيدر) */
+                0 10px 25px rgba(255, 255, 255, 0.2); /* أبيض خفيف */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* height: 100%; Removed fixed height for flex items */
+    flex-basis: 220px; /* Give a base width, flex-grow will distribute remaining space */
+    flex-grow: 1; /* Allow cards to grow to fill space */
+    max-width: 280px; /* Optional: Set a max-width for larger screens */
+    color: var(--services-card-text-color);
+    opacity: 0; /* هذا هو الذي يجعلها مخفية في البداية */
+    transform: translateY(30px); /* تبدأ من الأسفل قليلاً */
+}
+
+.service-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 1s ease-out, transform 1s ease-out; /* تطبيق الانتقال على الظهور */
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.service-icon {
+    font-size: 50px;
+    color: inherit;
+    margin-bottom: 20px;
+}
+
+.service-card h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: inherit;
+}
+
+.service-card p {
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 400;
+    color: inherit;
+}
+
+/* Stories Section (قصص ملهمة) */
+.stories-section {
+    padding: 80px 0;
+    background-color: var(--white);
+    text-align: center;
+    margin-top: 50px;
+    margin-right: 30px;
+    margin-left: 30px;
+    border-radius: 30px;
+}
+
+.stories-section h2 {
+    font-size: 40px;
+    font-weight: bold;
+    color: #002C3E ; /* لون عنوان القصص */
+    margin-bottom: 50px;
+}
+
+.stories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 4 أعمدة للقصص (تم تعديل الحد الأدنى للعرض) */
+    gap: 30px;
+    justify-content: center;
+    align-items: stretch;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.story-card {
+    background-color: var(--story-card-bg);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* محاذاة لليمين للنص */
+    text-align: right; /* محاذاة النص لليمين داخل البطاقة */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: auto; /* تم التعديل: لجعل الارتفاع تلقائي (مستطيل) */
+    color: var(--story-card-text-color);
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.story-card h3 {
+    font-size: 30px;
+    font-weight: bolder;
+    margin-bottom: 15px;
+    color: inherit;
+}
+
+.story-card p {
+    font-size: 24px;
+    line-height: 1.6;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: inherit;
+}
+
+.story-card .read-more {
+    display: inline-block;
+    color: var(--read-more-color);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+    transition: color 0.3s ease, background-color 0.3s ease, padding 0.3s ease, border-radius 0.3s ease; /* Add background-color to transition */
+    align-self: flex-start; /* ليكون زر المزيد على اليسار */
+    padding: 5px 10px; /* Add some padding to see the background */
+    border-radius: 5px; /* Slightly round the corners */
+}
+
+.story-card .read-more:hover {
+    color: var(--white); /* Change text color to white on hover */
+    background-color: var(--header-button-color); /* Use the blue button color as background */
+    text-decoration: none; /* Remove underline on hover */
+}
+
+/* Footer Styles */
+.main-footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text-color);
+    padding: 60px 0 30px;
+    margin-top: 50px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.footer-col {
+    flex: 1;
+    min-width: 200px;
+    text-align: right;
+}
+
+/* التعديل هنا: لجعل "تواصل معنا" ونص الهاتف على اليمين قليلاً */
+.footer-col.footer-contact h3,
+.footer-col.footer-contact p {
+    padding-right: 30px; /* أضف مسافة بادئة من اليمين */
+}
+
+
+.footer-col h3 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: var(--footer-text-color);
+}
+
+.footer-col p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.footer-col p i {
+    color: var(--footer-icon-color);
+    font-size: 18px;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    color: var(--footer-link-color);
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+    display: block; /* لجعل منطقة الضغط أكبر */
+}
+
+.footer-col ul li a:hover {
+    color: var(--footer-link-hover-color);
+}
+
+.social-icons {
+    display: flex;
+    justify-content: flex-end; /* محاذاة لليمين */
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-icons a {
+
+    color: var(--footer-icon-color);
+    font-size: 24px;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: var(--footer-link-hover-color);
+}
+
+.footer-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* الشعار على اليسار في RTL */
+    justify-content: flex-start;
+    flex: 1; /* للسماح لها بالنمو */
+    min-width: 150px;
+}
+
+.footer-rawa-logo {
+    max-width: 120px;
+    height: auto;
+    margin-bottom: 25px;
+}
+
+.language-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--footer-select-bg);
+    border-radius: 25px;
+    padding: 8px 15px;
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+}
+
+.language-selector i {
+    color: var(--footer-select-text);
+    font-size: 18px;
+}
+
+.language-selector select {
+    background: transparent;
+    border: none;
+    color: var(--footer-select-text);
+    font-family: 'Almarai', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    appearance: none; /* لإزالة سهم المتصفح الافتراضي */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 15px; /* مسافة لليسار للسهم الافتراضي إذا لم يتم إزالته بالكامل */
+}
+
+.language-selector select:focus {
+    outline: none;
+}
+
+
+/* Animations for new sections */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Basic Responsiveness */
+@media (max-width: 992px) {
+    .about-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .about-image-container {
+        width: 320px;
+        height: 320px;
+    }
+
+    .about-text-content {
+        max-width: 90%;
+        text-align: center;
+    }
+
+    .about-text-content h2 {
+        font-size: 40px;
+    }
+
+    .about-text-content p {
+        font-size: 16px;
+    }
+
+    .about-text-content .quote {
+        font-size: 22px;
+    }
+
+    .services-grid {
+        flex-direction: column; /* Stack cards vertically on smaller screens */
+        gap: 20px; /* Adjust gap for vertical stacking */
+    }
+    .service-card {
+        flex-basis: auto; /* Reset flex-basis for vertical stacking */
+        max-width: 400px; /* Limit card width when stacked */
+        width: 100%; /* Take full width of its container */
+        margin: 0 auto; /* Center individual cards */
+        padding: 25px;
+    }
+    .service-icon {
+        font-size: 40px;
+    }
+    .service-card h3 {
+        font-size: 18px;
+    }
+
+    .stories-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 3 أعمدة للقصص */
+    }
+    .story-card h3 {
+        font-size: 20px;
+    }
+    .story-card p {
+        font-size: 15px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .footer-col {
+        min-width: unset;
+        width: 100%;
+    }
+    .footer-col p, .footer-col ul, .social-icons {
+        justify-content: center;
+    }
+    .footer-col.footer-contact h3,
+    .footer-col.footer-contact p {
+        padding-right: 0; /* إزالة المسافة البادئة في الشاشات الصغيرة لتوسيط المحتوى */
+    }
+    .footer-logo {
+        align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 15px;
+    }
+    .navbar-left {
+        order: 2;
+    }
+    .navbar-right {
+        order: 1;
+        gap: 15px;
+    }
+
+    body[dir="ltr"] .navbar-left { order: 1; }
+    body[dir="ltr"] .navbar-right { order: 2; }
+
+    .dropbtn {
+        padding: 8px 18px;
+        font-size: 13px;
+    }
+    .navbar-left .mini-logo {
+        height: 30px;
+    }
+    .hero-section {
+        padding: 60px 15px;
+        margin: 20px 15px;
+        min-height: 400px;
+    }
+    .rawa-logo {
+        max-width: 280px;
+    }
+    .hero-text {
+        font-size: 26px;
+        padding: 10px 20px;
+    }
+    .dropdown-content {
+        min-width: 180px;
+    }
+
+    .about-rawa-section, .services-section, .stories-section {
+        margin-right: 15px;
+        margin-left: 15px;
+        padding: 60px 0;
+    }
+
+    .about-text-content h2 {
+        font-size: 36px;
+    }
+
+    .about-text-content .quote {
+        font-size: 20px;
+    }
+
+    .services-section h2, .stories-section h2 {
+        font-size: 32px;
+        margin-bottom: 40px;
+    }
+
+    .services-grid {
+        flex-direction: column; /* Stack cards vertically on smaller screens */
+        gap: 15px; /* Adjust gap for vertical stacking */
+    }
+    .service-card {
+        max-width: 350px; /* Further limit width on smaller screens */
+        padding: 20px;
+    }
+    .service-icon {
+        font-size: 35px;
+    }
+    .service-card h3 {
+        font-size: 16px;
+    }
+    .service-card p {
+        font-size: 14px;
+    }
+
+    .stories-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    .story-card {
+        padding: 25px;
+    }
+    .story-card h3 {
+        font-size: 18px;
+    }
+    .story-card p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-left {
+        gap: 10px;
+    }
+    .dropbtn {
+        padding: 6px 15px;
+        font-size: 12px;
+    }
+    .navbar-left .mini-logo {
+        height: 25px;
+    }
+    .hero-section {
+        padding: 40px 10px;
+        margin: 15px 10px;
+        min-height: 350px;
+    }
+    .rawa-logo {
+        max-width: 220px;
+    }
+    .hero-text {
+        font-size: 22px;
+        padding: 8px 15px;
+    }
+
+    .about-rawa-section, .services-section, .stories-section {
+        margin-right: 10px;
+        margin-left: 10px;
+        padding: 40px 0;
+    }
+
+    .about-image-container {
+        width: 250px;
+        height: 250px;
+    }
+
+    .about-text-content h2 {
+        font-size: 30px;
+    }
+
+    .about-text-content p {
+        font-size: 15px;
+    }
+
+    .about-text-content .quote {
+        font-size: 18px;
+    }
+
+    .services-section h2, .stories-section h2 {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+
+    .services-grid {
+        flex-direction: column; /* Always stack vertically on very small screens */
+        gap: 10px;
+    }
+    .service-card {
+        max-width: 100%; /* Take full width */
+        padding: 15px;
+    }
+    .service-icon {
+        font-size: 30px;
+    }
+    .service-card h3 {
+        font-size: 15px;
+    }
+    .service-card p {
+        font-size: 13px;
+    }
+
+    .stories-grid {
+        grid-template-columns: 1fr; /* عمود واحد للقصص */
+    }
+    .story-card {
+        padding: 20px;
+    }
+    .story-card h3 {
+        font-size: 16px;
+    }
+    .story-card p {
+        font-size: 13px;
+    }
+
+    .main-footer {
+        padding: 40px 0 20px;
+    }
+    .footer-col h3 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .footer-col p, .footer-col ul li a {
+        font-size: 14px;
+    }
+    .social-icons a {
+        font-size: 20px;
+    }
+    .footer-rawa-logo {
+        max-width: 100px;
+    }
+    .language-selector select {
+        font-size: 14px;
+    }
+}

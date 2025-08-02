@@ -1,0 +1,421 @@
+:root {
+    /* الألوان من التصميم العام للصفحة */
+    --body-background-color: rgba(255, 250, 248, 1); /* لون الخلفية الرئيسية */
+    --card-background-color: transparent; /* خلفية البطاقة شفافة */
+    --input-bg-color: #E6E8F6; /* لون خلفية حقول الإدخال */
+    --input-border-color: #CCC; /* لون حدود حقول الإدخال */
+    --text-color: #002C3E; /* لون النص الرئيسي (الداكن) */
+    --label-color: #002C3E; /* لون عناوين الحقول */
+    --button-bg-color: #7D7FC8; /* لون زر إنشاء الحساب (بنفسجي) */
+    --button-text-color: #FDE4DD; /* لون النص داخل الزر */
+    --link-color: #EA8F75; /* لون الروابط */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* ظل خفيف للعناصر */
+    --error-color: #D8000C; /* لون رسائل الخطأ */
+}
+
+/* الأنماط العامة */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Almarai', sans-serif;
+    direction: rtl; /* اتجاه النص من اليمين لليسار */
+    background-color: var(--body-background-color); /* تطبيق لون الخلفية الجديد */
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-direction: row-reverse; /* لجعل النموذج على اليمين والصورة على اليسار في RTL */
+    background-color: transparent; /* إزالة خلفية الـ wrapper نفسها */
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* ظل كبير للحاوية كلها */
+    max-width: 1200px;
+    width: 100%;
+}
+
+.image-section {
+    flex: 1;
+    min-width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; /* إزالة الخلفية */
+    padding: 20px;
+}
+
+.left-decorative-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.signup-container {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 0;
+}
+
+.header-logo {
+    margin-bottom: 30px;
+    background-color: transparent; /* إزالة الخلفية */
+    border-radius: 20px;
+    padding: 15px 30px;
+    box-shadow: none; /* إزالة الظل */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    align-self: flex-start;
+    margin-right: 40px;
+}
+
+.rawa-signup-logo {
+    max-width: 100px;
+    height: auto;
+    display: block;
+}
+
+.signup-box {
+    background-color: transparent; /* إزالة الخلفية */
+    border-radius: 30px;
+    box-shadow: none; /* إزالة الظل */
+    padding: 40px;
+    width: 100%;
+    text-align: right;
+}
+
+.box-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    margin-bottom: 30px;
+}
+
+.box-header h2 {
+    font-size: 30px;
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+.signup-form .form-group {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.signup-form .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: bold; /* جعل النص بولد */
+    color: var(--label-color);
+    text-align: right;
+}
+
+.signup-form .form-group input[type="text"],
+.signup-form .form-group input[type="password"],
+.signup-form .form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 10px;
+    background-color: var(--input-bg-color);
+    font-size: 16px;
+    color: var(--text-color);
+    font-family: 'Almarai', sans-serif;
+    outline: none;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    text-align: right;
+}
+
+.signup-form .form-group input:focus,
+.signup-form .form-group select:focus {
+    border-color: var(--button-bg-color);
+    box-shadow: 0 0 0 3px rgba(125, 127, 200, 0.2);
+}
+
+/* Radio buttons and checkboxes styles */
+.form-group-radio {
+    margin-bottom: 25px;
+}
+
+.form-group-radio p {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold; /* جعل النص بولد */
+    color: var(--label-color);
+    text-align: right;
+    display: block;
+}
+
+.form-group-radio .radio-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    /* محاذاة لليمين مع بادينج لمطابقة بداية السؤال */
+    justify-content: flex-end;
+    padding-right: 0; /* تأكد من عدم وجود مسافة بادئة غير مرغوبة هنا */
+}
+
+.form-group-radio label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--text-color);
+    font-weight: 400;
+    flex-direction: row-reverse; /* لترتيب الراديو على يمين النص */
+}
+
+.form-group-radio input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--input-border-color);
+    border-radius: 50%;
+    background-color: var(--white);
+    position: relative;
+    margin-left: 8px; /* مسافة بين الدائرة والنص (عكس الاتجاه) */
+    margin-right: 0;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.form-group-radio input[type="radio"]:checked {
+    border-color: var(--button-bg-color);
+    background-color: var(--button-bg-color);
+}
+
+.form-group-radio input[type="radio"]:checked::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: var(--white);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form-group-checkbox {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: right;
+}
+
+.form-group-checkbox label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--text-color);
+    font-weight: bold; /* جعل النص بولد */
+    flex-direction: row-reverse;
+}
+
+.form-group-checkbox input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--input-border-color);
+    border-radius: 5px;
+    background-color: var(--white);
+    position: relative;
+    margin-left: 8px;
+    margin-right: 0;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.form-group-checkbox input[type="checkbox"]:checked {
+    background-color: var(--button-bg-color);
+    border-color: var(--button-bg-color);
+}
+
+.form-group-checkbox input[type="checkbox"]:checked::before {
+    content: '\2713';
+    display: block;
+    color: var(--white);
+    font-size: 14px;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.terms-link {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    margin-right: 5px;
+}
+
+.terms-link:hover {
+    text-decoration: underline;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 15px 20px;
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: 'Almarai', sans-serif;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.submit-button:hover {
+    background-color: #6260B5;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 15px;
+    color: var(--text-color);
+    font-weight: bold; /* جعل النص بولد */
+}
+
+.login-link a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    color: var(--error-color);
+    font-size: 13px;
+    margin-top: 5px;
+    text-align: right;
+    font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) { /* Tablets and smaller */
+    .main-wrapper {
+        flex-direction: column; /* تحويل التخطيط إلى عمودي على الشاشات الصغيرة */
+        max-width: 600px; /* تحديد أقصى عرض للنموذج عند العمودي */
+    }
+    .image-section {
+        min-width: unset; /* إزالة الحد الأدنى للعرض */
+        width: 100%; /* تأخذ العرض الكامل */
+        padding: 40px 20px; /* زيادة البادينج لجعل الصورة تبدو أفضل */
+    }
+    .left-decorative-image {
+        max-width: 80%; /* تصغير الصورة قليلاً لتناسب الشاشات الأصغر */
+    }
+    .signup-container {
+        max-width: 100%; /* تأخذ العرض الكامل للـ main-wrapper */
+    }
+    .header-logo {
+        align-self: center; /* توسيط اللوجو في الوضع العمودي */
+        margin-right: 0; /* إزالة المارجن لليمين */
+        margin-bottom: 20px; /* تعديل المسافة السفلية */
+    }
+    .signup-box {
+        padding: 30px;
+        border-radius: 25px;
+    }
+    .box-header h2 {
+        font-size: 26px;
+    }
+    .signup-form .form-group input,
+    .signup-form .form-group select,
+    .submit-button {
+        font-size: 15px;
+        padding: 12px 15px;
+    }
+    .form-group-radio .radio-options {
+        flex-direction: column; /* تبقى عمودية لتناسب الشاشات الصغيرة */
+        gap: 10px;
+        align-items: flex-end; /* محاذاة لليمين */
+    }
+    .form-group-checkbox label {
+        font-size: 14px;
+    }
+    .login-link {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) { /* Mobile phones */
+    body {
+        padding: 15px;
+    }
+    .signup-box {
+        padding: 20px;
+        border-radius: 20px;
+    }
+    .header-logo {
+        margin-bottom: 15px;
+        padding: 10px 20px;
+    }
+    .rawa-signup-logo {
+        max-width: 80px;
+    }
+    .box-header h2 {
+        font-size: 22px;
+    }
+    .signup-form .form-group {
+        margin-bottom: 20px;
+    }
+    .signup-form .form-group label,
+    .form-group-radio p {
+        font-size: 14px;
+    }
+    .signup-form .form-group input,
+    .signup-form .form-group select,
+    .submit-button {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+    .form-group-radio label,
+    .form-group-checkbox label,
+    .login-link {
+        font-size: 13px;
+    }
+    .form-group-radio input[type="radio"],
+    .form-group-checkbox input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+    }
+}

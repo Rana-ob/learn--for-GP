@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المعلومات الشخصية</title>
+    <!-- استدعاء خط Almarai من Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <!-- استدعاء أيقونات Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* الألوان المحددة - تم تحديثها لتتوافق مع متغيرات الجذر في style.css الرئيسي */
+        :root {
+            /* الألوان المحددة الجديدة من style.css الرئيسي */
+            --body-background-color: #002C3E;
+            /* لون الخلفية الكلي للصفحة */
+            --header-button-color: #7D7FC8;
+            /* لون زر تسجيل الدخول */
+            --hero-quote-color: #DFBD69;
+            /* لون نص الآية الكريمة */
+            /* ألوان أخرى من الصورة الجديدة للهيدر */
+            --header-text-color: #002C3E;
+            /* لون English ونص Rawa الصغير */
+            --white: rgba(255, 250, 248, 1);
+            --subtle-border-color: #E0E0E0;
+            /* للخطوط الفاصلة والحدود الخفيفة */
+            --dropdown-hover-bg: #F0F0F0;
+            /* لون خلفية عند التحويم على خيارات القائمة */
+            --dropdown-border-color: #CCC;
+            /* لون حدود القائمة المنسدلة */
+            /* ألوان جديدة لقسم "ما هو رؤى؟" و "الخدمات" */
+            --rawa-section-bg: #002C3E;
+            /* لون خلفية قسم "ما هو رؤى؟" */
+            --rawa-section-text-color: #FDE4DD;
+            /* لون النص في قسم "ما هو رؤى؟" */
+            --highlight-color-yellow: #DFBD69;
+            /* لون التمييز الأصفر (لرؤى) */
+            --highlight-color-blue: #7D7FC8;
+            /* لون التمييز الأزرق (لفتح حساب) */
+            --services-card-bg: #D8FBFF;
+            /* خلفية بطاقات الخدمات - تم التحديث */
+            --services-card-text-color: #002C3E;
+            /* لون نص بطاقات الخدمات - تم التحديث */
+            /* ألوان لقسم "قصص ملهمة" والـ Footer */
+            --stories-bg: #002C3E;
+            --stories-title-color: #FDE4DD;
+            --story-card-bg: #D8FBFF;
+            --story-card-text-color: #002C3E;
+            --read-more-color: #7D7FC8;
+            --footer-bg: #001A27;
+            /* لون أغمق لأسفل الفوتر */
+            --footer-text-color: #FDE4DD;
+            --footer-link-color: #FDE4DD;
+            --footer-link-hover-color: #7D7FC8;
+            --footer-icon-color: #EA8F75;
+            /* لون أيقونات التواصل الاجتماعي */
+            --footer-select-bg: #002C3E;
+            --footer-select-text: #FDE4DD;
+            /* ألوان خاصة بصفحة info_guardian - تم تعيينها لتتوافق مع الألوان العامة */
+            --info-header-bg: var(--white);
+            /* لون الهيدر في هذه الصفحة */
+            --info-body-bg: var(--body-background-color);
+            /* لون خلفية الجسم */
+            --info-card-bg: #23627C;
+            /* لون خلفية بطاقة المعلومات (أغمق كما طلبتِ) */
+            --info-text-dark: var(--header-text-color);
+            /* نص داكن (للهيدر) */
+            --info-text-light: var(--white);
+            /* نص فاتح (على الخلفية الداكنة) - تم التعديل */
+            --info-button-color: var(--header-button-color);
+            /* لون الأزرار */
+            --info-button-hover: #6260B5;
+            /* لون تحويم الأزرار */
+            --info-active-color: var(--footer-icon-color);
+            /* لون العنصر النشط/التمييز #EA8F75 */
+            --info-success-color: #2ECC71;
+            /* لون النجاح (أخضر) */
+            --info-border-color: var(--subtle-border-color);
+            /* لون الحدود الخفيفة */
+        }
+        
+        /* التنسيق العام */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Almarai', sans-serif;
+            background-color: var(--info-body-bg);
+            color: var(--info-text-light);
+            direction: rtl;
+            line-height: 1.6;
+        }
+
+        /* Pre-Header Banner Section (مأخوذ من welcome.html) */
+        .pre-header-banner {
+            background-color: var(--hero-quote-color);
+            color: var(--header-text-color);
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            direction: rtl;
+        }
+
+        /* Header/Navbar Styles (مأخوذ من welcome.html ومُعدّل) */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: var(--white);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            height: 70px;
+        }
+
+        .navbar-right, .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .navbar-left .mini-logo {
+            height: 40px; /* Adjusted size */
+            width: auto;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .navbar-link {
+            color: var(--info-text-dark); /* نص داكن للهيدر */
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .navbar-link.active {
+            color: var(--info-active-color); /* لون نشط */
+        }
+
+        .navbar-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--info-active-color); /* لون نشط */
+        }
+
+        .lang-link {
+            color: var(--info-text-dark); /* نص داكن للهيدر */
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .lang-link:hover {
+            color: var(--info-active-color);
+        }
+
+        .logout-btn {
+            background-color: var(--info-button-color); /* لون الزر */
+            color: var(--white); /* نص أبيض على الزر */
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Almarai', sans-serif;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--info-button-hover); /* لون تحويم الزر */
+            transform: translateY(-2px);
+        }
+
+        /* قسم المعلومات */
+        .info-container {
+            background-color: var(--info-card-bg);
+            /* خلفية البطاقة الداكنة */
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 30px;
+            border-radius: 20px;
+            /* حواف دائرية أكبر */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3),
+            /* ظل بنفسجي خفيف */
+            0 10px 25px rgba(0, 0, 0, 0.2);
+            /* ظل أبيض خفيف - تم تعديله ليكون أغمق */
+            color: var(--info-text-light);
+            /* نص فاتح داخل البطاقة الداكنة */
+        }
+
+        .info-title {
+            color: var(--info-active-color);
+            /* لون #EA8F75 كما طلبتِ */
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            /* حجم أكبر للعنوان */
+            font-weight: 800;
+            /* خط أثقل للعنوان */
+            border-bottom: 1px solid var(--info-border-color);
+            /* حدود خفيفة */
+            padding-bottom: 10px;
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            /* خلفية شفافة بيضاء خفيفة */
+            border-radius: 10px;
+            /* حواف دائرية */
+        }
+
+        .info-label {
+            font-weight: bold;
+            min-width: 160px;
+            color: var(--info-active-color);
+            /* لون #EA8F75 كما طلبتِ */
+        }
+
+        .info-value {
+            color: #BBBBBB;
+            /* لون رمادي للقيم الثابتة كما طلبتِ */
+        }
+
+        /* Style for the editable select dropdown */
+        .info-value-editable {
+            background-color: var(--white);
+            /* لون أبيض للخلفية */
+            color: var(--header-text-color);
+            /* لون نص داكن */
+            border: 1px solid var(--subtle-border-color);
+            border-radius: 5px;
+            padding: 8px 10px;
+            font-family: 'Almarai', sans-serif;
+            direction: rtl;
+            appearance: none;
+            /* لإزالة سهم المتصفح الافتراضي */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            flex-grow: 1;
+            /* للسماح لها بالنمو */
+            max-width: calc(100% - 170px);
+            /* لضبط العرض مع info-label */
+            cursor: pointer;
+        }
+
+        .info-value-editable:focus {
+            outline: none;
+            border-color: var(--highlight-color-blue);
+            box-shadow: 0 0 0 2px rgba(125, 127, 200, 0.3);
+        }
+
+        .status-active {
+            color: var(--info-success-color);
+            /* لون النجاح */
+            font-weight: bold;
+        }
+
+        .check-icon {
+            color: var(--info-success-color);
+            margin-right: 5px;
+        }
+        
+        /* Modal for Logout Confirmation */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--info-card-bg);
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .close-btn {
+            color: #aaaaaa;
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        /* التصميم المتجاوب */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                height: auto;
+                padding: 10px 15px;
+            }
+            .navbar-right, .navbar-left {
+                width: 100%;
+                justify-content: space-between;
+                gap: 15px;
+                flex-direction: row-reverse; /* For RTL alignment */
+            }
+            .navbar-left {
+                justify-content: center;
+                margin-top: 10px;
+                order: 2;
+            }
+            .navbar-right {
+                order: 1;
+            }
+            .navbar-links {
+                display: none; /* Hide navigation links on small screens */
+            }
+            .info-container {
+                margin: 20px;
+                padding: 20px;
+            }
+            .info-title {
+                font-size: 22px;
+                margin-bottom: 20px;
+            }
+            .info-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+                padding: 10px;
+            }
+            .info-label {
+                min-width: 100%;
+                font-size: 15px;
+            }
+            .info-value, .info-value-editable {
+                font-size: 14px;
+            }
+            .logout-btn {
+                padding: 6px 15px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 10px 15px;
+            }
+            .navbar-left .mini-logo {
+                height: 35px;
+            }
+            .logout-btn {
+                padding: 5px 12px;
+                font-size: 13px;
+            }
+            .info-container {
+                margin: 15px;
+                padding: 15px;
+            }
+            .info-title {
+                font-size: 20px;
+            }
+            .info-label {
+                font-size: 14px;
+            }
+            .info-value, .info-value-editable {
+                font-size: 13px;
+            }
+            .pre-header-banner p {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+   
+    <header class="navbar">
+        <div class="navbar-right">
+            <!-- شعار الموقع -->
+            <img src="images/Rowa2.png" alt="Rawa Mini Logo" class="mini-logo" width="150px" height:="150px">
+            <!-- روابط التنقل للمستخدم المسجل دخوله -->
+            <nav class="navbar-links">
+                <a href="#" class="navbar-link">الرئيسية</a>
+                <a href="#" class="navbar-link active">المعلومات الشخصية</a>
+            </nav>
+        </div>
+        <div class="navbar-left">
+            <!-- رابط تغيير اللغة وزر تسجيل الخروج -->
+            <a href="#" class="lang-link">English</a>
+            <button class="logout-btn" id="logoutButton">تسجيل خروج</button>
+        </div>
+    </header>
+
+    <div class="info-container">
+        <h1 class="info-title">المعلومات الشخصية</h1>
+
+        <div class="info-list">
+            <div class="info-item">
+                <span class="info-label">الاسم الرباعي:</span>
+                <span class="info-value fixed-value">ساره</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">رقم الهوية الوطنية:</span>
+                <span class="info-value fixed-value">1183057290</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">صفتك بالنسبة للطفل:</span>
+                <span class="info-value fixed-value">وصي</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">المرحلة الدراسية:</span>
+                <select class="info-value-editable">
+                    <option value="ابتدائي" selected>ابتدائي</option>
+                    <option value="متوسط">متوسط</option>
+                    <option value="ثانوي">ثانوي</option>
+                </select>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">دخل الطفل:</span>
+                <span class="info-value fixed-value">ضمان</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">حالة الحساب:</span>
+                <span class="info-value status-active">نشط</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for Logout Confirmation -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <p>هل أنت متأكد من أنك تريد تسجيل الخروج؟</p>
+            <div class="modal-buttons">
+                <button class="logout-btn" onclick="performLogout()">نعم، تسجيل الخروج</button>
+                <button class="logout-btn" style="background-color: #EA8F75;" onclick="closeModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // دالة لعرض نافذة تأكيد تسجيل الخروج
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            document.getElementById('logoutModal').style.display = 'flex';
+        });
+
+        // دالة لإخفاء نافذة التأكيد
+        function closeModal() {
+            document.getElementById('logoutModal').style.display = 'none';
+        }
+
+        // دالة لتنفيذ عملية تسجيل الخروج (يمكنك وضع منطق تسجيل الخروج الفعلي هنا)
+        function performLogout() {
+            console.log('User is logging out...');
+            // هنا يمكنك إضافة منطق تسجيل الخروج الحقيقي، مثل حذف توكن الجلسة وإعادة التوجيه لصفحة تسجيل الدخول
+            window.location.href = '#'; // مثال لإعادة التوجيه
+            closeModal();
+        }
+
+        // إخفاء الـ modal عند الضغط خارجها
+        window.onclick = function(event) {
+            const modal = document.getElementById('logoutModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

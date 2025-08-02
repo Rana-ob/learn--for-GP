@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل حساب جديد - الأسرة الكافلة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="signup_styles.css"> <!-- استخدمي نفس ملف الأنماط المشترك -->
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="image-section">
+            <img src="images/Family.png" alt="Decorative Image" class="left-decorative-image">
+        </div>
+
+        <div class="signup-container">
+            <div class="header-logo">
+                <img src="images/Rowa2.png" alt="Rawa Logo" class="rawa-signup-logo">
+            </div>
+
+            <div class="signup-box">
+                <div class="box-header">
+                    <h1>الأسرة الكافلة</h1>
+                </div>
+                <form class="signup-form" id="fosterFamilySignupForm">
+                    <div class="form-group">
+                        <label for="head-name">ما اسم رب الأسرة الكامل؟</label>
+                        <input type="text" id="head-name" name="head_name" placeholder="" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="national-id">رقم الهوية الوطنية لرب الأسرة؟</label>
+                        <input type="text" id="national-id" name="national_id" placeholder="" required maxlength="10">
+                        <div class="error-message" id="national-id-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">الرمز السري</label>
+                        <input type="password" id="password" name="password" placeholder="" required>
+                        <div class="error-message" id="password-error"></div>
+                    </div>
+
+                    <div class="form-group-radio">
+                        <p>هل تملك قرار كفالة رسمي؟</p>
+                        <div class="radio-options">
+                            <label><input type="radio" name="official_fostering_decision" value="نعم" required> نعم</label>
+                            <label><input type="radio" name="official_fostering_decision" value="لا"> لا</label>
+                        </div>
+                        <div class="error-message" id="fostering-decision-error" style="display: none;">
+                            نعتذر، لا يمكن إكمال التسجيل بدون قرار كفالة رسمي.
+                        </div>
+                    </div>
+
+                    <div class="form-group-radio">
+                        <p>ما نوع الكفالة؟</p>
+                        <div class="radio-options">
+                            <label><input type="radio" name="fostering_type" value="مؤقت" required> مؤقتة</label>
+                            <label><input type="radio" name="fostering_type" value="دائم"> دائمة</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group-radio">
+                        <p>الفئة العمرية للطفل المكفول؟</p>
+                        <div class="radio-options">
+                            <label><input type="radio" name="child_age_group" value="أقل من 6 سنوات" required> أقل من 6 سنوات</label>
+                            <label><input type="radio" name="child_age_group" value="6 سنوات أو أكثر"> 6 سنوات أو أكثر</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group-radio">
+                        <p>هل الطفل المكفول يدرس حاليًا؟</p>
+                        <div class="radio-options">
+                            <label><input type="radio" name="is_child_studying" value="نعم" required> نعم</label>
+                            <label><input type="radio" name="is_child_studying" value="لا"> لا</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="child-study-level-group" style="display: none;">
+                        <label for="child-study-level">اختر المرحلة الدراسية للطفل</label>
+                        <select id="child-study-level" name="child_study_level">
+                            <option value="">-- اختر --</option>
+                            <option value="ابتدائي">ابتدائي</option>
+                            <option value="متوسط">متوسط</option>
+                            <option value="ثانوي">ثانوي</option>
+                            <option value="جامعي">جامعي</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group-checkbox">
+                        <label>
+                            <a href="#" class="terms-link">الشروط والأحكام</a> أوافق على
+                            <input type="checkbox" name="terms_and_conditions" required>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-button">إنشاء الحساب</button>
+
+                    <p class="login-link">
+                        لديك حساب؟ <a href="foster_family_login.html">سجل الدخول</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="foster_family_signup_script.js"></script>
+    
+    
+    <!-- Terms and Conditions Popup -->
+<div class="terms-popup" id="termsPopup">
+    <div class="terms-content">
+        <div class="terms-header">
+            <h2>الشروط والأحكام - حساب استثماري خاص بالأيتام "رؤى"</h2>
+            <button class="close-terms" id="closeTerms">&times;</button>
+        </div>
+        <div class="terms-text">
+            <h3>التمهيد</h3>
+            <p>نظرًا لرغبة الجهة المُشرفة (الوصي أو الجهة النظامية) في استثمار أموال الأيتام لدى المصرف بطريقة شرعية مسؤولة، فقد اتفق الطرفان على أن يتم تشغيل الأموال ضمن منتج استثماري خاص يُسمى "رُؤى"، يدار وفق صيغة المضاربة الشرعية، ويُعد هذا التمهيد جزءًا لا يتجزأ من الشروط والأحكام ومكملاً لها.</p>
+            
+            <h3>التعريفات</h3>
+            <ul>
+                <li><strong>منتج رُؤى:</strong> حساب استثماري للأيتام يدار من خلال صيغة المضاربة الشرعية.</li>
+                <li><strong>المصرف:</strong> مصرف الإنماء بصفته مضاربًا ومديرًا للاستثمار.</li>
+                <li><strong>الوصي:</strong> هو الشخص أو الجهة الشرعية المخولة بإدارة مال اليتيم والزكاة عنه.</li>
+                <li><strong>اليتيم:</strong> القاصر الذي توفي والده ولم يبلغ سن الرشد، ويمتلك رصيدًا في هذا الحساب.</li>
+                <li><strong>مبلغ الاستثمار:</strong> المال المودع من قبل الوصي أو الجهة النظامية باسم اليتيم لاستثماره.</li>
+            </ul>
+            
+            <h3>صيغة الاستثمار</h3>
+            <ol>
+                <li>يقوم منتج "رُؤى" على صيغة المضاربة الشرعية، حيث يقدم اليتيم المال ويقوم المصرف بالإدارة والاستثمار.</li>
+                <li>يتعهد المصرف بإدارة الأموال بما يحقق مصلحة اليتيم، دون ضمان للربح أو رأس المال، إلا في حال التعدي أو التقصير أو مخالفة شروط الاتفاقية.</li>
+                <li>تكون نسبة توزيع الأرباح 99% لليتيم و1% للمصرف كمضارب، وفقًا لما تحقق فعليًا من أرباح.</li>
+                <li>يتم استثمار الأموال وفق الضوابط الشرعية المعتمدة من الهيئة الشرعية للمصرف.</li>
+            </ol>
+            
+            <h3>أرباح الحساب</h3>
+            <ol>
+                <li>تُوزّع الأرباح بين المصرف واليتيم بنسبة المضاربة المحددة أعلاه.</li>
+                <li>في حال زيادة الربح الفعلي عن الربح المتوقع، تبقى حصة المصرف 1% فقط، ولا يحصل على حافز إضافي.</li>
+                <li>في حال كان الربح الفعلي أقل من المتوقع، يتحمل اليتيم التغير في الربح ولا يُلزم المصرف بتعويض النقص، ما لم يكن هناك تقصير.</li>
+                <li>يتم توزيع الأرباح بشكل ربع سنوي ما لم يتم الاتفاق على خلاف ذلك.</li>
+            </ol>
+            
+            <h3>الزكاة</h3>
+            <ol>
+                <li>في حال بلغ رصيد اليتيم النصاب وحال عليه الحول، فالزكاة واجبة عليه شرعًا.</li>
+                <li>يتولى الوصي إخراج الزكاة نيابة عن اليتيم، ويقع عليه مسؤولية التحقق من النصاب والمدة.</li>
+                <li>يمكن للمصرف تقديم خدمة حساب الزكاة وتذكير الوصي بمواعيد إخراجها.</li>
+            </ol>
+            
+            <h3>الإيداع والسحب</h3>
+            <ol>
+                <li>لا يُسمح بالسحب من الحساب إلا بعد مرور ١١ سنة أو وصول اليتيم إلى السن القانوني وفق ضوابط شرعية وبعد الرجوع للجهة المختصة، مثل المحكمة أو الجمعية الرسمية.</li>
+                <li>يمكن للوصي أو الجهة النظامية إيداع مبالغ إضافية باسم اليتيم في أي وقت.</li>
+                <li>يمكن اعادة استثمار الأموال بعد وصوله إلى السن القانوني و لمدة ٤ سنوات و يمكن السحب من الحساب بعد اعادة الاستثمار بحد أقصى ٥٠,٠٠٠ ألف ريالاً سعودياً.</li>
+                <li>يجب تقديم وثيقة رسمية تثبت صلاحية السحب في حال طلب السحب قبل بلوغ اليتيم السن القانوني.</li>
+            </ol>
+            
+            <h3>الحوكمة والرقابة</h3>
+            <ol>
+                <li>يُخضع المصرف أموال حساب "رُؤى" لرقابة شرعية ومالية مستقلة.</li>
+                <li>تُستثمر الأموال في أنشطة مجازة من الهيئة الشرعية للمصرف.</li>
+                <li>يقدم المصرف تقارير دورية عن أداء الاستثمار للوصي أو الجهة المشرفة.</li>
+                <li>يتم تدقيق الحسابات بشكل سنوي من قبل مراجع خارجي معتمد.</li>
+            </ol>
+            
+            <h3>الإنهاء والتحويل</h3>
+            <ol>
+                <li>يكون إسم الحساب باسم اليتيم وفق الإجراءات النظامية و بأشراف الوصي.</li>
+                <li>للوصي الحق في طلب إنهاء الحساب أو تحويله بناءً على مصلحة اليتيم ووفق الضوابط.</li>
+                <li>في حال إنهاء الحساب، يتم تصفية الأموال وفق الإجراءات النظامية وتحت إشراف الجهات المختصة.</li>
+                <li>يمكن تحويل الحساب إلى حساب عادي بعد بلوغ اليتيم السن القانوني.</li>
+            </ol>
+            
+            <h3>أحكام عامة</h3>
+            <ol>
+                <li>يخضع هذا المنتج لأنظمة البنك المركزي السعودي، ولوائح حماية أموال القاصرين.</li>
+                <li>يحق للمصرف تعديل شروط الاستثمار بما لا يضر بحقوق اليتيم، ويتم إشعار الوصي بذلك.</li>
+                <li>يتم حل أي نزاع ينشأ عن هذا العقد بالطرق الودية أولاً، ثم باللجوء إلى المحاكم المختصة في المملكة العربية السعودية.</li>
+                <li>تعتبر هذه الشروط والأحكام ملزمة للطرفين وورثتهم وخلفائهم القانونيين.</li>
+            </ol>
+            
+            <h3>سياسة الخصوصية</h3>
+            <ol>
+                <li>يلتزم المصرف بالمحافظة على سرية معلومات اليتيم والوصي وعدم الكشف عنها إلا بموجب قانون أو قرار قضائي.</li>
+                <li>يتم معالجة البيانات الشخصية وفقًا لأنظمة حماية البيانات الشخصية في المملكة العربية السعودية.</li>
+                <li>يمكن للوصي طلب تصحيح أو تحديث المعلومات الشخصية في أي وقت.</li>
+            </ol>
+        </div>
+    </div>
+</div>
+</body>
+</html>

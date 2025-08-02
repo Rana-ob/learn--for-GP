@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رؤى - بوت الاستثمار الشرعي</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* إضافة ستايلات خاصة بهذه الصفحة، مع الاستفادة من متغيرات CSS الخاصة بك */
+        body {
+            /* الخلفية الرئيسية تأتي من style.css عبر var(--body-background-color) */
+        }
+
+        .chatbot-container {
+            max-width: 1000px; /* يمكن تعديل العرض الأقصى حسب تفضيلك */
+            margin: 50px auto; /* توسيط الحاوية مع مسافة علوية وسفلية */
+            background-color: var(--white); /* خلفية بيضاء من متغيراتك */
+            padding: 40px;
+            border-radius: 30px; /* حواف دائرية كبيرة لتتناسب مع تصميمك */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* ظل أعمق وأكثر وضوحًا */
+            text-align: center;
+        }
+
+        .chatbot-container h1 {
+            font-size: 48px; /* حجم كبير للعنوان */
+            font-weight: 800; /* خط ثقيل جداً */
+            color: var(--header-text-color); /* لون النص الأساسي لموقعك */
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+
+        .chatbot-container p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--header-text-color); /* لون النص الأساسي */
+            margin-bottom: 35px;
+            font-weight: 400;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .chatbot-container iframe {
+            border: none;
+            border-radius: 20px; /* حواف دائرية للإطار لتتناسب مع التصميم */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* ظل خفيف للإطار */
+            width: 100%;
+            height: 750px; /* ارتفاع كافي لعرض البوت بشكل جيد */
+            min-height: 500px; /* ارتفاع أدنى لضمان العرض على الشاشات الصغيرة */
+        }
+
+        .footer-note {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #888;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* تعديلات على الـ navbar-right لتكون بنفس الأسلوب */
+        .navbar-right .language-toggle {
+            color: var(--header-text-color); /* لضمان اللون الصحيح مع الخلفية البيضاء */
+        }
+
+        /* Media Queries للتجاوبية - يمكنك إضافة المزيد هنا إذا لزم الأمر */
+        @media (max-width: 768px) {
+            .chatbot-container {
+                margin: 30px auto;
+                padding: 25px;
+                border-radius: 20px;
+            }
+            .chatbot-container h1 {
+                font-size: 38px;
+            }
+            .chatbot-container p {
+                font-size: 16px;
+                margin-bottom: 25px;
+            }
+            .chatbot-container iframe {
+                height: 600px; /* تقليل الارتفاع على الشاشات الأصغر */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chatbot-container {
+                margin: 20px auto;
+                padding: 15px;
+                border-radius: 15px;
+            }
+            .chatbot-container h1 {
+                font-size: 30px;
+            }
+            .chatbot-container p {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            .chatbot-container iframe {
+                height: 500px; /* تقليل الارتفاع أكثر */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="navbar-left">
+            <img src="images/Rowa2.png" alt="Rawa Mini Logo" class="mini-logo">
+        </div>
+       
+            <a href="#" class="language-toggle">English</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="chatbot-container">
+            <h1>تحدث مع بوت رؤى </h1>
+            <p>
+                مساعدك الشخصي للإجابة عن كل استفساراتك المتعلقة بالاستثمار الشرعي وأموال الأيتام.
+                اطرح سؤالك الآن واحصل على إجابات دقيقة وموثوقة.
+            </p>
+
+            <iframe
+                src="https://f0720c143a6f79724f.gradio.live"
+                title="بوت الاستثمار الشرعي وأموال الأيتام"
+            ></iframe>
+
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-col footer-contact">
+                <h3>تواصل معنا</h3>
+                <p><i class="fas fa-phone-alt"></i> خدمة العملاء: 888 999 000</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f" id="social-link"> </i></a>
+                    <a href="#"><i class="fab fa-instagram" id="social-link"></i></a>
+                    <a href="#"><i class="fab fa-twitter" id="social-link"></i></a>
+                    <a href="#"><i class="fas fa-envelope"id="social-link"></i></a>
+                </div>
+            </div>
+            <div class="footer-col footer-links">
+                <h3>الخدمات</h3>
+                <ul>
+                    <li><a href="#">الوصي الشرعي</a></li>
+                    <li><a href="#">عرض الرصيد الاستثماري</a></li>
+                    <li><a href="#">عرض التوقعات المستقبلية</a></li>
+                </ul>
+            </div>
+            <div class="footer-col footer-links">
+               <ul><br><br>
+                    <li><a href="#">الأسرة الكافلة</a></li>
+                    <li><a href="#">الشروط والأحكام</a></li>
+                    <li><a href="#">حساب العوائد الاستثمارية</a></li>
+                </ul>
+            </div>
+            <div class="footer-col footer-logo">
+                <img src="images/Rowa.png" alt="Rawa Logo" class="footer-rawa-logo">
+                <div class="language-selector">
+                    <i class="fas fa-globe"></i>
+                    <select>
+                        <option value="ar">العربية</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // JavaScript for dropdown (إذا كان لديك هذا في script.js ولم يتم استدعاؤه تلقائيًا)
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownBtn = document.querySelector('.dropbtn');
+            const dropdownContent = document.getElementById('loginDropdown');
+            if (dropdownBtn && dropdownContent) {
+                dropdownBtn.addEventListener('click', function() {
+                    dropdownContent.classList.toggle('show');
+                });
+                window.addEventListener('click', function(event) {
+                    if (!event.target.matches('.dropbtn') && !event.target.matches('.dropbtn *')) {
+                        if (dropdownContent.classList.contains('show')) {
+                            dropdownContent.classList.remove('show');
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
